@@ -9,13 +9,11 @@ from skimage import exposure
 from skimage import io
 from skimage import morphology
 
-def getSegment(image, borderY=[], borderX=[], threshhold=0.1):
+def getSegment(image, borderY=[], borderX=[], threshhold=0.1, seedPoint=(0, 0)):
 
     # image = io.imread(imagePath)
     imageHSV = color.rgb2hsv(image)
     # imageSobel = filters.sobel(imageHSV[...,0])
-
-    seedPoint = (550, 830)
 
     r = np.array(borderY)
     c = np.array(borderX)
@@ -29,7 +27,7 @@ def getSegment(image, borderY=[], borderX=[], threshhold=0.1):
         imageMasked = imageHSV[...,0] * maskPoly
 
     floodMask = seg.flood(imageMasked, seedPoint, tolerance=threshhold)
-    
+
     # imageHSVCopy[floodMask, 0] = 1
 
     # fig, ax = image_show(image)

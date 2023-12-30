@@ -7,11 +7,11 @@
 
         Label:
             text: 'Choose threshhold'
-            size_hint: (1,.2)
+            size_hint: (1,.1)
 
         FloatLayout:
             id: imageLayout
-            size_hint: (1,.6)
+            size_hint: (1,.7)
             
             Image:
                 id: imageOriginal
@@ -27,8 +27,18 @@
 
         Slider:
             id: threshholdslider
-            size_hint: (1,.2)
+            size_hint: (1,.1)
             min: 0.01
             max: 0.1
             value: root.DEFAULT_THRESHHOLD
             on_touch_up: root.onThreshholdChange(self.value)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,.1)
+            Button:
+                text: 'Return'
+                on_release: root.manager.current = root.manager.previous()
+            Button:
+                text: 'Next'
+                on_release: root.manager.current = root.manager.next()
