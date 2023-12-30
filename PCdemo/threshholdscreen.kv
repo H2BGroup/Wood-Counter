@@ -1,0 +1,33 @@
+<ThreshholdScreen>:
+    name: 'threshholdscreen'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: 'Choose threshhold'
+            size_hint: (1,.2)
+
+        FloatLayout:
+            id: imageLayout
+            size_hint: (1,.6)
+            
+            Image:
+                id: imageOriginal
+                source: ''
+                pos_hint: {'x': 0, 'y': 0}
+                size_hint: (1, 1)
+            Image:
+                id: imageMask
+                source: ''
+                pos_hint: {'x': 0, 'y': 0}
+                size_hint: (1, 1)
+                color: [1.0, 0.0, 0.0, 0.3]
+
+        Slider:
+            id: threshholdslider
+            size_hint: (1,.2)
+            min: 0.01
+            max: 0.1
+            value: root.DEFAULT_THRESHHOLD
+            on_touch_up: root.onThreshholdChange(self.value)

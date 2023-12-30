@@ -9,16 +9,10 @@ from skimage import exposure
 from skimage import io
 from skimage import morphology
 
-def getSegment(imagePath, borderY=[], borderX=[], threshhold=0.1):
-    def image_show(image, nrows=1, ncols=1, cmap='gray', **kwargs):
-        fig, ax = plt.subplots(nrows=nrows, ncols=ncols, figsize=(16, 16))
-        ax.imshow(image, cmap='gray')
-        ax.axis('off')
-        return fig, ax
+def getSegment(image, borderY=[], borderX=[], threshhold=0.1):
 
-    image = io.imread(imagePath)
+    # image = io.imread(imagePath)
     imageHSV = color.rgb2hsv(image)
-    imageHSVCopy = np.copy(imageHSV)
     # imageSobel = filters.sobel(imageHSV[...,0])
 
     seedPoint = (550, 830)
@@ -35,17 +29,14 @@ def getSegment(imagePath, borderY=[], borderX=[], threshhold=0.1):
         imageMasked = imageHSV[...,0] * maskPoly
 
     floodMask = seg.flood(imageMasked, seedPoint, tolerance=threshhold)
+    
+    # imageHSVCopy[floodMask, 0] = 1
 
-    # mask_postprocessed = np.logical_and(floodMask, imageHSVCopy[..., 1] > 0.4)
-    # mask_postprocessed = morphology.binary_opening(mask_postprocessed, np.ones((3, 3)))
-
-    imageHSVCopy[floodMask, 0] = 0.5
-
-    fig, ax = image_show(image)
-    ax.imshow(floodMask, alpha=0.3)
-    plt.show()
+    # fig, ax = image_show(image)
+    # ax.imshow(floodMask, alpha=0.3)
+    # plt.show()
 
     # return color.hsv2rgb(imageHSVCopy)
     return floodMask
 
-getSegment('testImg/img5.jpg', [150, 720, 730], [845, 1510, 130], 0.055)
+# getSegment('testImg/img1.jpg', [330, 750, 750 ,330], [1010, 1010, 185, 185], 0.055)
