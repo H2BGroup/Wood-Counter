@@ -7,8 +7,8 @@ from io import BytesIO
 from kivy.core.image import Image as CoreImage
 
 class ThreshholdScreen(Screen):
-    borderY = [330, 750, 750 ,330]
-    borderX = [1010, 1010, 185, 185]
+    # borderY = [330, 750, 750 ,330]
+    # borderX = [1010, 1010, 185, 185]
     DEFAULT_THRESHHOLD = 0.01
 
     def on_kv_post(self, base_widget):
@@ -27,7 +27,7 @@ class ThreshholdScreen(Screen):
 
     def onThreshholdChange(self, threshhold):
         app = App.get_running_app()
-        mask= segmentation.getSegment(np.array(self.imageData), self.borderY, self.borderX, threshhold, seedPoint=(app.imageY, app.imageX))
+        mask= segmentation.getSegment(np.array(self.imageData), app.borderY, app.borderX, threshhold, seedPoint=(app.imageY, app.imageX))
 
         imageData = im.fromarray((mask * 255).astype(np.uint8))
         buffer = BytesIO()
