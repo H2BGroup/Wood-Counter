@@ -1,12 +1,12 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
-import threshholdscreen, select_point_screen, draw_border_screen
+import threshholdscreen, select_point_screen, draw_border_screen, choose_image_screen
 
 class Screens(ScreenManager):
     pass
 
 class WoodCounter(App):
-    imageSrc = 'testImg/img1.jpg'
+    imageSrc = ''
     borderX = []
     borderY = []
     

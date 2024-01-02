@@ -14,7 +14,7 @@ class DrawBorderScreen(Screen):
         image.source = app.imageSrc
         image.reload()
 
-    def on_kv_post(self, base_widget):
+    def on_enter(self, *args):
         self.loadImage()
         
 

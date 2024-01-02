@@ -1,0 +1,43 @@
+#:kivy 2.2.1
+<ChooseImageScreen>:
+    name: 'choose_file_screen'
+    canvas.before:
+        Color:
+            rgba: 0.153, 0.612, 0.235, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: self.parent.size
+        pos: self.parent.pos
+
+        Label:
+            text: 'Select image from file or use camera to make a new one'
+            size_hint: (1,.1)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (.7,.4)
+            pos_hint: {'center_x':0.5}
+
+            Button:
+                text: 'Select from file'
+                on_release: root.selectFile()
+            
+            Button:
+                text: 'Open camera'
+        
+        Label:
+            id: imageNameLabel
+            text: 'No image chosen'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,.1)
+            Button:
+                text: 'Next'
+                id: continueButton
+                on_release: root.manager.current = root.manager.next()
+                disabled: True

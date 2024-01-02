@@ -11,7 +11,7 @@ class SelectPointScreen(Screen):
         image.source = app.imageSrc
         image.reload()
 
-    def on_kv_post(self, base_widget):
+    def on_enter(self, *args):
         self.loadImage()
         
 
@@ -26,3 +26,4 @@ class SelectPointScreen(Screen):
                 with self.ids['pointCanvas'].canvas:
                     d = 5
                     Ellipse(pos=(touch.x - d/2, touch.y-d/2), size=(d,d))
+                self.ids['continueButton'].disabled = False
