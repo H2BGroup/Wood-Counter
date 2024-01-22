@@ -14,6 +14,7 @@
         Label:
             text: 'Select point inside wood'
             size_hint: (1,.1)
+            font_size: '24dp'
 
         Image:
             id: imageOriginal
@@ -31,9 +32,12 @@
             Button:
                 text: 'Return'
                 on_release: root.manager.current = root.manager.previous()
+                font_size: '24dp'
+                
             Button:
                 text: 'Next'
                 id: continueButton
                 on_release: root.manager.current = root.manager.next()
                 disabled: True
+                font_size: '24dp'
             

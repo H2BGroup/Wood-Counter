@@ -1,6 +1,6 @@
 #:kivy 2.2.1
-<DrawBorderScreen>:
-    name: 'draw_border_screen'
+<StackVolumeScreen>:
+    name: 'stack_volume_screen'
     canvas.before:
         Color:
             rgba: 0.153, 0.612, 0.235, 1
@@ -12,20 +12,22 @@
         orientation: 'vertical'
 
         Label:
-            text: 'Select points to draw a border around wood as close as possible'
-            size_hint: (1,.1)
-            font_size: '24dp'
+            text: 'The volume of the given stack'
+            size_hint: (1,.2)
+            font_size: '32dp'
 
         Image:
-            id: imageOriginal
+            id: thumbnail
             source: ''
-            size_hint: (1,.8)
-            on_touch_down: root.imagePressed(args[1])
+            pos_hint: {'center_x':.5}
 
-            BoxLayout:
-                orientation: 'vertical'
-                id: pointCanvas
-
+        Label:
+            id: stackVolumeField
+            text: ''
+            size_hint: (1,.2)
+            font_size: '32dp'
+            markup: True
+            
         BoxLayout:
             orientation: 'horizontal'
             size_hint: (1,.1)
@@ -33,13 +35,10 @@
                 text: 'Return'
                 on_release: root.manager.current = root.manager.previous()
                 font_size: '24dp'
+                            
             Button:
-                text: 'Clear'
-                on_release: root.clearBorder()
-                font_size: '24dp'
-            Button:
-                text: 'Next'
+                text: 'New stack'
                 id: continueButton
                 on_release: root.manager.current = root.manager.next()
-                disabled: True
                 font_size: '24dp'
+            

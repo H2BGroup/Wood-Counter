@@ -29,6 +29,10 @@ class ThreshholdScreen(Screen):
         app = App.get_running_app()
         mask= segmentation.getSegment(np.array(self.imageData), app.borderY, app.borderX, threshhold, seedPoint=(app.imageY, app.imageX))
 
+        app.stack_area = (np.count_nonzero(mask) + app.plate_area) * app.conversion_rate
+
+        print(app.stack_area)
+
         imageData = im.fromarray((mask * 255).astype(np.uint8))
         buffer = BytesIO()
         imageData.save(buffer, format='png')

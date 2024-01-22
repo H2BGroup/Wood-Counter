@@ -16,6 +16,7 @@
         Label:
             text: 'Select image from file or use camera to make a new one'
             size_hint: (1,.1)
+            font_size: '24dp'
 
         BoxLayout:
             orientation: 'horizontal'
@@ -25,13 +26,16 @@
             Button:
                 text: 'Select from file'
                 on_release: root.selectFile()
+                font_size: '24dp'
             
             Button:
                 text: 'Open camera'
+                font_size: '24dp'
         
         Label:
             id: imageNameLabel
             text: 'No image chosen'
+            font_size: '24dp'
 
         BoxLayout:
             orientation: 'horizontal'
@@ -41,3 +45,4 @@
                 id: continueButton
                 on_release: root.manager.current = root.manager.next()
                 disabled: True
+                font_size: '24dp'
