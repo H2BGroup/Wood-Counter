@@ -1,0 +1,45 @@
+#:kivy 2.2.1
+<DrawBorderScreen>:
+    name: 'draw_border_screen'
+    canvas.before:
+        Color:
+            rgba: 0.153, 0.612, 0.235, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: 'Select points to draw a border around wood as close as possible'
+            size_hint: (1,.1)
+            font_size: '24dp'
+
+        Image:
+            id: imageOriginal
+            source: ''
+            size_hint: (1,.8)
+            on_touch_down: root.imagePressed(args[1])
+
+            BoxLayout:
+                orientation: 'vertical'
+                id: pointCanvas
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,.1)
+            Button:
+                text: 'Return'
+                on_release: root.manager.current = root.manager.previous()
+                font_size: '24dp'
+            Button:
+                text: 'Clear'
+                on_release: root.clearBorder()
+                font_size: '24dp'
+            Button:
+                text: 'Next'
+                id: continueButton
+                on_release: root.manager.current = root.manager.next()
+                disabled: True
+                font_size: '24dp'

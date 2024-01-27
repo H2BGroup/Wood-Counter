@@ -1,0 +1,47 @@
+#:kivy 2.2.1
+<ThreshholdScreen>:
+    name: 'threshholdscreen'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: 'Choose threshhold'
+            size_hint: (1,.1)
+            font_size: '24dp'
+
+        FloatLayout:
+            id: imageLayout
+            size_hint: (1,.7)
+            
+            Image:
+                id: imageOriginal
+                source: ''
+                pos_hint: {'x': 0, 'y': 0}
+                size_hint: (1, 1)
+            Image:
+                id: imageMask
+                source: ''
+                pos_hint: {'x': 0, 'y': 0}
+                size_hint: (1, 1)
+                color: [1.0, 0.0, 0.0, 0.3]
+
+        Slider:
+            id: threshholdslider
+            size_hint: (1,.1)
+            min: 0.01
+            max: 0.1
+            value: root.DEFAULT_THRESHHOLD
+            on_touch_up: root.onThreshholdChange(self.value)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,.1)
+            Button:
+                text: 'Return'
+                on_release: root.manager.current = root.manager.previous()
+                font_size: '24dp'
+            Button:
+                text: 'Next'
+                on_release: root.manager.current = root.manager.next()
+                font_size: '24dp'

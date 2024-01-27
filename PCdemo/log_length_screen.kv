@@ -1,0 +1,46 @@
+#:kivy 2.2.1
+<LogLengthScreen>:
+    name: 'log_length_screen'
+    canvas.before:
+        Color:
+            rgba: 0.153, 0.612, 0.235, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: 'Enter the length of the logs in meters'
+            font_size: '24dp'
+            size_hint: (1,.1)
+
+        AnchorLayout:
+
+            TextInput:
+                id: inputField
+                size_hint: (0.6, None)
+                height: 60
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                input_filter: 'float'
+                multiline: False
+                on_text: root.getLogLength()
+                halign: 'center'
+                font_size: '32dp'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,.1)
+
+            Button:
+                text: 'Return'
+                on_release: root.manager.current = root.manager.previous();
+                font_size: '24dp'
+
+            Button:
+                text: 'Calculate'
+                id: continueButton
+                on_release: root.manager.current = root.manager.next()
+                disabled: True
+                font_size: '24dp'
