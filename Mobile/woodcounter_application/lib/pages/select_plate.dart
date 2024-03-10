@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:floodfill_image/floodfill_image.dart';
+import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/draw_border.dart';
 import 'package:woodcounter_application/pages/threshold.dart';
@@ -32,7 +32,7 @@ class _SelectPlateState extends State<SelectPlate> {
             Text('Zaznacz tabliczkę'),
             FloodFillImage(
               imageProvider: FileImage(image),
-              fillColor: Colors.amber,
+              fillColor: Colors.amber.withOpacity(0.9),
               avoidColor: [Colors.transparent, Colors.black],
               tolerance: 50,
               width: MediaQuery.of(context).size.width.toInt(),

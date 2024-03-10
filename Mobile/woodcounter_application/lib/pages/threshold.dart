@@ -47,6 +47,9 @@ class _SetThresholdState extends State<SetThreshold> {
               onChanged: (double value) {
                 setState(() {
                   _threshold = value;
+
+
+                  
                 });
               },
             ),

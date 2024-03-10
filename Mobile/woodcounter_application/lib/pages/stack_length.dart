@@ -12,7 +12,19 @@ class StackLength extends StatefulWidget {
   State<StackLength> createState() => _StackLengthState();
 }
 
+void printMask(List<List<bool>> mask) {
+  for (int y = 0; y < mask.length; y++) {
+    String row = '';
+    for (int x = 0; x < mask[y].length; x++) {
+      row += mask[y][x] ? '1' : '0'; // 1 - obszar pokolorowany, 0 - obszar niepokolorowany
+    }
+    print(row);
+  }
+}
+
 class _StackLengthState extends State<StackLength> {
+  
+
   @override
   Widget build(BuildContext context) {
     final image = ModalRoute.of(context)!.settings.arguments as File;
