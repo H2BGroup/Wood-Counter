@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image/image.dart' as img;
 
 import 'queuelinear_floodfiller.dart';
@@ -21,6 +22,9 @@ class FloodFillPainter extends CustomPainter {
   Function(ui.Image)? onFloodFillEnd;
   Function? onInitialize;
   Function? onRepainted;
+  Offset? lastPosition;
+  bool? clicked = false;
+  List<bool>? mask;
 
   FloodFillPainter(
       {required this.image,
@@ -28,7 +32,10 @@ class FloodFillPainter extends CustomPainter {
       this.notifier,
       this.onFloodFillStart,
       this.onFloodFillEnd,
-      this.onInitialize})
+      this.onInitialize,
+      this.lastPosition,
+      this.clicked,
+      this.mask})
       : super(repaint: notifier) {
     _initFloodFiller();
   }
@@ -38,6 +45,7 @@ class FloodFillPainter extends CustomPainter {
         (await image.toByteData(format: ui.ImageByteFormat.png))!;
     var bytes = byteData.buffer.asUint8List();
     img.Image decoded = img.decodeImage(bytes)!;
+    clicked = false;
     _filler = QueueLinearFloodFiller(
         decoded,
         img.getColor(
@@ -96,9 +104,19 @@ class FloodFillPainter extends CustomPainter {
   }
 
   void fill(Offset position) async {
-    int pX = position.dx.toInt();
-    int pY = position.dy.toInt();
+    int pX;
+    int pY;
 
+    if (position != null) {
+      pX = position.dx.toInt();
+      pY = position.dy.toInt();
+    } else {
+      pX = lastPosition!.dx.toInt();
+      pY = lastPosition!.dy.toInt();
+    }
+
+    print('X: $pX');
+    print('Y: $pY');
     if (_filler == null) return;
 
     if (pX < 0 || pY < 0) return;
@@ -125,7 +143,11 @@ class FloodFillPainter extends CustomPainter {
 
   @override
   bool? hitTest(Offset position) {
-    if (_isFillActive!) fill(position);
+    if (_isFillActive!) {
+      fill(position);
+      clicked = true;
+      lastPosition = position;
+    }
     return super.hitTest(position);
   }
 
@@ -144,13 +166,15 @@ class FloodFillPainter extends CustomPainter {
         Paint(),
         BoxFit.fill);
 
+    mask = _filler?.getPixelsChecked();
+
     for (int x = 0; x < w; x++) {
       for (int y = 0; y < h; y++) {
-        if (_filler?.mask[x.toInt() + y.toInt() * w.toInt()]) {
+        if (mask![x.toInt() + y.toInt() * w.toInt()]) {
           canvas.drawRect(
             Rect.fromLTWH(
-              x.toDouble() ,
-              y.toDouble() ,
+              x.toDouble(),
+              y.toDouble(),
               1,
               1,
             ),

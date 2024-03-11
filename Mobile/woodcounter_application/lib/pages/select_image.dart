@@ -50,13 +50,7 @@ class _SelectImageState extends State<SelectImage> {
                 ElevatedButton(onPressed: () {}, child: Text('Zrób zdjęcie')),
               ],
             ),
-            if (_image != null)
-              Column(
-                children: [
-                  Image.file(_image),
-                  Text(_image.path),
-                ],
-              ),
+            if (_image != null) Image.file(_image),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

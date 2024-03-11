@@ -33,7 +33,7 @@ class _SelectPlateState extends State<SelectPlate> {
             FloodFillImage(
               imageProvider: FileImage(image),
               fillColor: Colors.amber.withOpacity(0.9),
-              avoidColor: [Colors.transparent, Colors.black],
+              avoidColor: [Colors.transparent],
               tolerance: 50,
               width: MediaQuery.of(context).size.width.toInt(),
             ),

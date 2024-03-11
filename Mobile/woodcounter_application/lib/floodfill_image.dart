@@ -22,7 +22,7 @@ class FloodFillImage extends StatefulWidget {
 
   /// Set fill value [tolerance] that ranges from 0 to 100.
   /// <br>Default value is 8.
-  final int tolerance;
+  int tolerance;
 
   /// Width of the image.
   /// Parent widget width will be prioritize if it's provided and less than the image width.
@@ -41,13 +41,15 @@ class FloodFillImage extends StatefulWidget {
 
   /// Callback function that returns the touch position and an [Image] from *dart:ui* when flood fill starts.
   /// <br>**Note:** Touch coordinate is relative to the image dimension.
-  final Function(Offset position,ui.Image image)? onFloodFillStart;
+  final Function(Offset position, ui.Image image)? onFloodFillStart;
 
   /// Callback function that returns an [Image] from *dart:ui* when flood fill ended.
   final Function(ui.Image image)? onFloodFillEnd;
 
+  Offset? lastPosition;
+
   /// Flutter widget that can use paint bucket functionality on the provided image.
-  const FloodFillImage(
+  FloodFillImage(
       {Key? key,
       required this.imageProvider,
       required this.fillColor,
@@ -101,7 +103,8 @@ class _FloodFillImageState extends State<FloodFillImage> {
 
   void _getImage() {
     final ImageStream? oldImageStream = _imageStream;
-    _imageStream = _imageProvider?.resolve(createLocalImageConfiguration(context));
+    _imageStream =
+        _imageProvider?.resolve(createLocalImageConfiguration(context));
     if (_imageStream?.key != oldImageStream?.key) {
       final ImageStreamListener listener = ImageStreamListener(_updateImage);
       oldImageStream?.removeListener(listener);
@@ -136,41 +139,52 @@ class _FloodFillImageState extends State<FloodFillImage> {
   @override
   Widget build(BuildContext context) {
     if (_painter != null) {
-      _painter?.setFillColor(widget.fillColor); //incase we want to update fillColor
+      _painter
+          ?.setFillColor(widget.fillColor); //incase we want to update fillColor
       _painter?.setAvoidColor(widget.avoidColor!);
       _painter?.setTolerance(widget.tolerance);
       _painter?.setIsFillActive(widget.isFillActive);
+      if (_painter?.clicked == true) {
+        _painter?.fill(_painter!.lastPosition!);
+        _repainter?.value = '';
+      }
     }
-    return (_imageInfo != null)
-        ? LayoutBuilder(builder: (context, BoxConstraints constraints) {
-            double w = _width!;
-            double h = _height!;
-            if (!constraints.maxWidth.isInfinite) {
-              if (constraints.maxWidth < _width!) {
-                w = constraints.maxWidth;
-              }
-            }
+    return Column(
+      children: [
+        (_imageInfo != null)
+            ? LayoutBuilder(builder: (context, BoxConstraints constraints) {
+                double w = _width!;
+                double h = _height!;
+                if (!constraints.maxWidth.isInfinite) {
+                  if (constraints.maxWidth < _width!) {
+                    w = constraints.maxWidth;
+                  }
+                }
 
-            if (!constraints.maxHeight.isInfinite) {
-              if (constraints.maxHeight < _height!) {
-                h = constraints.maxHeight;
-              }
-            }
+                if (!constraints.maxHeight.isInfinite) {
+                  if (constraints.maxHeight < _height!) {
+                    h = constraints.maxHeight;
+                  }
+                }
 
-            // print(" constraint max width " + constraints.maxWidth.toString());
-            // print(" constraint max height " + constraints.maxHeight.toString());
-            // print(" w " + w.toString());
-            // print(" h " + h.toString());
+                // print(" constraint max width " + constraints.maxWidth.toString());
+                // print(" constraint max height " + constraints.maxHeight.toString());
+                // print(" w " + w.toString());
+                // print(" h " + h.toString());
 
-            _painter!.setSize(Size(w, h));
-            return (widget.alignment == null)
-                ? RepaintBoundary(child: CustomPaint(painter: _painter, size: Size(w, h)))
-                : Align(
-                    alignment: widget.alignment!,
-                    child: CustomPaint(painter: _painter, size: Size(w, h)));
-          })
-        : (widget.loadingWidget == null)
-            ? CircularProgressIndicator()
-            : widget.loadingWidget!;
+                _painter!.setSize(Size(w, h));
+                return (widget.alignment == null)
+                    ? RepaintBoundary(
+                        child: CustomPaint(painter: _painter, size: Size(w, h)))
+                    : Align(
+                        alignment: widget.alignment!,
+                        child:
+                            CustomPaint(painter: _painter, size: Size(w, h)));
+              })
+            : (widget.loadingWidget == null)
+                ? CircularProgressIndicator()
+                : widget.loadingWidget!,
+      ],
+    );
   }
 }

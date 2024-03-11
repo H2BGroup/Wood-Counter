@@ -22,7 +22,6 @@ class QueueLinearFloodFiller {
   List<bool>? _pixelsChecked;
   Queue<_FloodFillRange>? _ranges;
   int num = 0;
-  var mask;
 
   QueueLinearFloodFiller(img.Image imgVal, int newColor) {
     image = imgVal;
@@ -60,6 +59,10 @@ class QueueLinearFloodFiller {
 
   void setFillColor(int value) {
     _fillColor = value;
+  }
+
+  List<bool>?getPixelsChecked() {
+    return _pixelsChecked;
   }
 
   void _prepare() {
@@ -124,10 +127,9 @@ class QueueLinearFloodFiller {
       }
     }
 
-    mask = _pixelsChecked;
-    print(mask);
+    print(_pixelsChecked);
     print(num);
-    return mask;
+    return _pixelsChecked;
   }
 
   // Finds the furthermost left and right boundaries of the fill area
