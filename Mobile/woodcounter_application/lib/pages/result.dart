@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/home.dart';
 
 class Result extends StatelessWidget {
-  const Result({super.key});
+  const Result({super.key, required this.image, required this.stackVolume});
+
+  final File image;
+  final double stackVolume;
 
   @override
   Widget build(BuildContext context) {
-    final image = ModalRoute.of(context)!.settings.arguments as File;
-    double result = 0;
-
     return Scaffold(
       appBar: AppBar(
         title:
@@ -24,8 +24,8 @@ class Result extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.file(image),
-            Text('Podaj długość stosu'),
-            Text('$result'),
+            Text('Objętość stosu'),
+            Text(stackVolume.toStringAsFixed(2)),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
