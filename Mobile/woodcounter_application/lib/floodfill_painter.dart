@@ -19,7 +19,7 @@ class FloodFillPainter extends CustomPainter {
   ui.Image image;
   Color fillColor;
   Function(Offset, ui.Image)? onFloodFillStart;
-  Function(ui.Image)? onFloodFillEnd;
+  Function(ui.Image, int)? onFloodFillEnd;
   Function? onInitialize;
   Function? onRepainted;
   Offset? lastPosition;
@@ -107,13 +107,8 @@ class FloodFillPainter extends CustomPainter {
     int pX;
     int pY;
 
-    if (position != null) {
-      pX = position.dx.toInt();
-      pY = position.dy.toInt();
-    } else {
-      pX = lastPosition!.dx.toInt();
-      pY = lastPosition!.dy.toInt();
-    }
+    pX = position.dx.toInt();
+    pY = position.dy.toInt();
 
     print('X: $pX');
     print('Y: $pY');
@@ -135,8 +130,11 @@ class FloodFillPainter extends CustomPainter {
       ui.PixelFormat.rgba8888,
       (output) async {
         image = output;
+        mask = _filler?.getPixelsChecked();
         notifier!.value = position.toString() + touchColor.toString();
-        if (onFloodFillEnd != null) onFloodFillEnd!(output);
+        if (onFloodFillEnd != null)
+          onFloodFillEnd!(
+              output, mask!.where((object) => object == true).length);
       },
     );
   }
@@ -165,8 +163,6 @@ class FloodFillPainter extends CustomPainter {
         canvas,
         Paint(),
         BoxFit.fill);
-
-    mask = _filler?.getPixelsChecked();
 
     for (int x = 0; x < w; x++) {
       for (int y = 0; y < h; y++) {

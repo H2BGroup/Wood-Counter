@@ -22,7 +22,7 @@ class FloodFillImage extends StatefulWidget {
 
   /// Set fill value [tolerance] that ranges from 0 to 100.
   /// <br>Default value is 8.
-  int tolerance;
+  final int tolerance;
 
   /// Width of the image.
   /// Parent widget width will be prioritize if it's provided and less than the image width.
@@ -44,12 +44,12 @@ class FloodFillImage extends StatefulWidget {
   final Function(Offset position, ui.Image image)? onFloodFillStart;
 
   /// Callback function that returns an [Image] from *dart:ui* when flood fill ended.
-  final Function(ui.Image image)? onFloodFillEnd;
+  final Function(ui.Image image, int)? onFloodFillEnd;
 
-  Offset? lastPosition;
+  final Offset? lastPosition;
 
   /// Flutter widget that can use paint bucket functionality on the provided image.
-  FloodFillImage(
+  const FloodFillImage(
       {Key? key,
       required this.imageProvider,
       required this.fillColor,
@@ -61,14 +61,15 @@ class FloodFillImage extends StatefulWidget {
       this.alignment,
       this.loadingWidget,
       this.onFloodFillStart,
-      this.onFloodFillEnd})
+      this.onFloodFillEnd,
+      this.lastPosition})
       : super(key: key);
 
   @override
-  _FloodFillImageState createState() => _FloodFillImageState();
+  FloodFillImageState createState() => FloodFillImageState();
 }
 
-class _FloodFillImageState extends State<FloodFillImage> {
+class FloodFillImageState extends State<FloodFillImage> {
   ImageProvider? _imageProvider;
   ImageStream? _imageStream;
   ImageInfo? _imageInfo;
@@ -76,6 +77,13 @@ class _FloodFillImageState extends State<FloodFillImage> {
   double? _height;
   FloodFillPainter? _painter;
   ValueNotifier<String>? _repainter;
+
+  void update(){
+     if (_painter?.clicked == true) {
+        _painter?.fill(_painter!.lastPosition!);
+        _repainter?.value = '';
+      }
+  }
 
   @override
   void didChangeDependencies() {
@@ -144,10 +152,6 @@ class _FloodFillImageState extends State<FloodFillImage> {
       _painter?.setAvoidColor(widget.avoidColor!);
       _painter?.setTolerance(widget.tolerance);
       _painter?.setIsFillActive(widget.isFillActive);
-      if (_painter?.clicked == true) {
-        _painter?.fill(_painter!.lastPosition!);
-        _repainter?.value = '';
-      }
     }
     return Column(
       children: [

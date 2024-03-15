@@ -2,25 +2,26 @@ import 'dart:io';
 
 import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
-import 'package:woodcounter_application/pages/draw_border.dart';
 import 'package:woodcounter_application/pages/threshold.dart';
 
 class SelectPlate extends StatefulWidget {
-  const SelectPlate({super.key});
+  const SelectPlate({super.key, required this.image});
+
+  final File image;
 
   @override
   State<SelectPlate> createState() => _SelectPlateState();
 }
 
 class _SelectPlateState extends State<SelectPlate> {
+  int plateArea = 0;
+
   @override
   Widget build(BuildContext context) {
-    final image = ModalRoute.of(context)!.settings.arguments as File;
-
     return Scaffold(
       appBar: AppBar(
         title:
-            Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -29,43 +30,38 @@ class _SelectPlateState extends State<SelectPlate> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Zaznacz tabliczkę'),
+            const Text('Zaznacz tabliczkę'),
             FloodFillImage(
-              imageProvider: FileImage(image),
+              imageProvider: FileImage(widget.image),
               fillColor: Colors.amber.withOpacity(0.9),
               avoidColor: [Colors.transparent],
               tolerance: 50,
               width: MediaQuery.of(context).size.width.toInt(),
+              onFloodFillEnd: (image, p1) => setState(() {
+                plateArea = p1;
+              }),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const DrawBorder(),
-                          settings: RouteSettings(
-                            arguments: image,
-                          ),
-                        ),
-                      );
+                      Navigator.pop(context);
                     },
-                    child: Text('Cofnij')),
+                    child: const Text('Cofnij')),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SetThreshold(),
-                          settings: RouteSettings(
-                            arguments: image,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Text('Dalej')),
+                    onPressed: plateArea != 0
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SetThreshold(
+                                    image: widget.image, plateArea: plateArea),
+                              ),
+                            );
+                          }
+                        : null,
+                    child: const Text('Dalej')),
               ],
             ),
           ],

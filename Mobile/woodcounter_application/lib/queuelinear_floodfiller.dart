@@ -5,10 +5,8 @@
 
 import 'dart:async';
 import 'dart:collection';
-import 'dart:io';
 import 'dart:ui';
 import 'package:image/image.dart' as img;
-import 'package:path_provider/path_provider.dart';
 
 class QueueLinearFloodFiller {
   img.Image? image;
@@ -21,7 +19,6 @@ class QueueLinearFloodFiller {
   List<int> _startColor = [0, 0, 0, 0];
   List<bool>? _pixelsChecked;
   Queue<_FloodFillRange>? _ranges;
-  int num = 0;
 
   QueueLinearFloodFiller(img.Image imgVal, int newColor) {
     image = imgVal;
@@ -128,7 +125,6 @@ class QueueLinearFloodFiller {
     }
 
     print(_pixelsChecked);
-    print(num);
     return _pixelsChecked;
   }
 
@@ -150,7 +146,6 @@ class QueueLinearFloodFiller {
 
       // **indicate that this pixel has already been checked and filled
       _pixelsChecked![pxIdx] = true;
-      num++;
 
       // **de-increment
       lFillLoc--; // de-increment counter
@@ -176,7 +171,6 @@ class QueueLinearFloodFiller {
 
       // **indicate that this pixel has already been checked and filled
       _pixelsChecked![pxIdx] = true;
-      num++;
 
       // **increment
       rFillLoc++; // increment counter

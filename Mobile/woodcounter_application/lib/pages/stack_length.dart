@@ -1,38 +1,39 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:woodcounter_application/calculations.dart';
 import 'package:woodcounter_application/pages/result.dart';
-import 'package:woodcounter_application/pages/threshold.dart';
-
 
 class StackLength extends StatefulWidget {
-  const StackLength({super.key});
+  const StackLength({super.key, required this.image, required this.plateArea, required this.stackArea});
+
+  final File image;
+  final int plateArea;
+  final int stackArea;
 
   @override
   State<StackLength> createState() => _StackLengthState();
 }
 
-void printMask(List<List<bool>> mask) {
-  for (int y = 0; y < mask.length; y++) {
-    String row = '';
-    for (int x = 0; x < mask[y].length; x++) {
-      row += mask[y][x] ? '1' : '0'; // 1 - obszar pokolorowany, 0 - obszar niepokolorowany
-    }
-    print(row);
-  }
-}
-
 class _StackLengthState extends State<StackLength> {
-  
+
+  final myController = TextEditingController();
+  RegExp _numberRegex = RegExp(r'^\d*\.?\d*$');
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final image = ModalRoute.of(context)!.settings.arguments as File;
-
     return Scaffold(
       appBar: AppBar(
         title:
-            Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -41,9 +42,14 @@ class _StackLengthState extends State<StackLength> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Podaj długość stosu'),
+            const Text('Podaj długość stosu'),
             TextField(
-              decoration: InputDecoration(
+              keyboardType: TextInputType.number,
+              controller: myController,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(_numberRegex)
+              ], 
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: '[Długość w metrach]',
               ),
@@ -53,28 +59,21 @@ class _StackLengthState extends State<StackLength> {
               children: [
                 ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cofnij')),
+                ElevatedButton(
+                    onPressed: () {
+                      double stackVolume = calculateStackVolume(widget.stackArea, widget.plateArea, double.parse(myController.text));
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SetThreshold(),
-                          settings: RouteSettings(
-                            arguments: image,
-                          ),
+                          builder: (context) => Result(image: widget.image, stackVolume: stackVolume,),
                         ),
                       );
                     },
-                    child: Text('Cofnij')),
-                ElevatedButton(onPressed: () {
-                  Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Result(),
-                          settings: RouteSettings(
-                            arguments: image,
-                          ),
-                        ),
-                      );
-                }, child: Text('Dalej')),
+                    child: const Text('Dalej')),
               ],
             ),
           ],

@@ -68,10 +68,7 @@ class _SelectImageState extends State<SelectImage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DrawBorder(),
-                          settings: RouteSettings(
-                            arguments: _image,
-                          ),
+                          builder: (context) => DrawBorder(image: _image),
                         ),
                       );
                     },
