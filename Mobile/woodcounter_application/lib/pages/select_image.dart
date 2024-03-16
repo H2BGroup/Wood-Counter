@@ -67,14 +67,14 @@ class _SelectImageState extends State<SelectImage> {
                     },
                     child: Text(translation.returnButton)),
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: _image != null ? () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => DrawBorder(image: _image!),
                         ),
                       );
-                    },
+                    } : null,
                     child: Text(translation.nextButton)),
               ],
             ),
