@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/select_plate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DrawBorder extends StatefulWidget {
   const DrawBorder({super.key, required this.image});
@@ -15,10 +16,11 @@ class DrawBorder extends StatefulWidget {
 class _DrawBorderState extends State<DrawBorder> {
   @override
   Widget build(BuildContext context) {
+    var translation = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title:
-            const Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(translation.appTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -27,7 +29,7 @@ class _DrawBorderState extends State<DrawBorder> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Obrysuj stos'),
+            Text(translation.drawBorder),
             Image.file(widget.image),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,7 +38,7 @@ class _DrawBorderState extends State<DrawBorder> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Cofnij')),
+                    child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -47,7 +49,7 @@ class _DrawBorderState extends State<DrawBorder> {
                         ),
                       );
                     },
-                    child: const Text('Dalej')),
+                    child: Text(translation.nextButton)),
               ],
             ),
           ],

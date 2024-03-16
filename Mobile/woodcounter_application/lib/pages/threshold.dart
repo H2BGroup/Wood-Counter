@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/stack_length.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SetThreshold extends StatefulWidget {
   SetThreshold({super.key, required this.image, required this.plateArea});
@@ -21,6 +22,7 @@ class _SetThresholdState extends State<SetThreshold> {
 
   @override
   Widget build(BuildContext context) {
+    var translation = AppLocalizations.of(context)!;
     Widget xd = FloodFillImage(
       key: _floodFillImageKey,
       imageProvider: FileImage(widget.image),
@@ -35,8 +37,8 @@ class _SetThresholdState extends State<SetThreshold> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WoodCounter',
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(translation.appTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -45,7 +47,7 @@ class _SetThresholdState extends State<SetThreshold> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Dostosuj zakres pomiaru'),
+            Text(translation.selectThreshold),
             xd,
             Slider(
               value: _threshold,
@@ -74,7 +76,7 @@ class _SetThresholdState extends State<SetThreshold> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Cofnij')),
+                    child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: stackArea != 0
                         ? () {
@@ -89,7 +91,7 @@ class _SetThresholdState extends State<SetThreshold> {
                             );
                           }
                         : null,
-                    child: const Text('Dalej')),
+                    child: Text(translation.nextButton)),
               ],
             ),
           ],

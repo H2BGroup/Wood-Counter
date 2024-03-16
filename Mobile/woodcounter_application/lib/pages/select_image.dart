@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:woodcounter_application/pages/draw_border.dart';
 import 'package:woodcounter_application/pages/home.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectImage extends StatefulWidget {
   const SelectImage({super.key});
@@ -30,10 +31,11 @@ class _SelectImageState extends State<SelectImage> {
 
   @override
   Widget build(BuildContext context) {
+    var translation = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title:
-            Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(translation.appTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -46,8 +48,8 @@ class _SelectImageState extends State<SelectImage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: _pickImage, child: Text('Galeria zdjęć')),
-                ElevatedButton(onPressed: () {}, child: Text('Zrób zdjęcie')),
+                    onPressed: _pickImage, child: Text(translation.imageGalleryButton)),
+                ElevatedButton(onPressed: () {}, child: Text(translation.takeAPhotoButton)),
               ],
             ),
             if (_image != null) Image.file(_image),
@@ -62,7 +64,7 @@ class _SelectImageState extends State<SelectImage> {
                             builder: (context) => const HomePage()),
                       );
                     },
-                    child: Text('Cofnij')),
+                    child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -72,7 +74,7 @@ class _SelectImageState extends State<SelectImage> {
                         ),
                       );
                     },
-                    child: Text('Dalej')),
+                    child: Text(translation.nextButton)),
               ],
             ),
           ],

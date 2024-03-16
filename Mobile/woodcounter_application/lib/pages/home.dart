@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/select_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var translation = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -15,13 +18,13 @@ class HomePage extends StatelessWidget {
               'assets/icons/stack.png',
               height: 300,
             ),
-            const Text('WoodCounter',
-                style: TextStyle(
+            Text(translation.appTitle,
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                     fontWeight: FontWeight.bold)),
-            const Text('Możesz na nas liczyć',
-                style: TextStyle(color: Colors.white, fontSize: 25)),
+            Text(translation.subtitle,
+                style: const TextStyle(color: Colors.white, fontSize: 25)),
             const SizedBox(height: 100),
             ElevatedButton(
               style: ElevatedButton.styleFrom(padding: EdgeInsets.all(20)),
@@ -31,8 +34,8 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const SelectImage()),
                 );
               },
-              child: const Text('Zaczynajmy!',
-                  style: TextStyle(color: Colors.green, fontSize: 40)),
+              child: Text(translation.startButton,
+                  style: const TextStyle(color: Colors.green, fontSize: 40)),
             ),
           ],
         ),

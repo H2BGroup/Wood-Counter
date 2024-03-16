@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/home.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Result extends StatelessWidget {
   const Result({super.key, required this.image, required this.stackVolume});
@@ -11,10 +12,11 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var translation = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title:
-            Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(translation.appTitle, style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -24,7 +26,7 @@ class Result extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.file(image),
-            Text('Objętość stosu'),
+            Text(translation.stackVolume),
             Text(stackVolume.toStringAsFixed(2)),
             ElevatedButton(
                 onPressed: () {
@@ -35,7 +37,7 @@ class Result extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('Powrót do ekranu głównego')),
+                child: Text(translation.returnToHomePage)),
           ],
         ),
       ),

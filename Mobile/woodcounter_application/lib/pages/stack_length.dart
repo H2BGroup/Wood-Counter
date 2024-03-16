@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:woodcounter_application/calculations.dart';
 import 'package:woodcounter_application/pages/result.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StackLength extends StatefulWidget {
   const StackLength({super.key, required this.image, required this.plateArea, required this.stackArea});
@@ -30,10 +31,11 @@ class _StackLengthState extends State<StackLength> {
 
   @override
   Widget build(BuildContext context) {
+    var translation = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title:
-            const Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(translation.appTitle, style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -42,16 +44,16 @@ class _StackLengthState extends State<StackLength> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Podaj długość stosu'),
+            Text(translation.giveLength),
             TextField(
               keyboardType: TextInputType.number,
               controller: myController,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(_numberRegex)
               ], 
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: '[Długość w metrach]',
+                hintText: translation.lengthInMeters,
               ),
             ),
             Row(
@@ -61,7 +63,7 @@ class _StackLengthState extends State<StackLength> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Cofnij')),
+                    child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: () {
                       double stackVolume = calculateStackVolume(widget.stackArea, widget.plateArea, double.parse(myController.text));
@@ -73,7 +75,7 @@ class _StackLengthState extends State<StackLength> {
                         ),
                       );
                     },
-                    child: const Text('Dalej')),
+                    child: Text(translation.nextButton)),
               ],
             ),
           ],

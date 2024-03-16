@@ -1,0 +1,23 @@
+{
+    "appTitle": "WoodCounter",
+    "subtitle": "Możesz na nas liczyć",
+    "startButton": "Zaczynamy!",
+    "returnButton": "Powrót",
+    "nextButton": "Dalej",
+
+    "imageGalleryButton": "Galeria zdjęć",
+    "takeAPhotoButton": "Zrób zdjęcie",
+
+    "drawBorder": "Narysuj obramowanie wokół stosu drewna",
+
+    "selectPlate": "Wybierz tabliczkę",
+
+    "selectThreshold": "Wybierz zakres pomiaru",
+
+    "giveLength": "Podaj długość stosu",
+    
+    "lengthInMeters": "[Długość w metrach]",
+
+    "stackVolume": "Objętość stosu",
+    "returnToHomePage": "Powrót do strony głównej"
+}

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/threshold.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectPlate extends StatefulWidget {
   const SelectPlate({super.key, required this.image});
@@ -18,10 +19,11 @@ class _SelectPlateState extends State<SelectPlate> {
 
   @override
   Widget build(BuildContext context) {
+    var translation = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title:
-            const Text('WoodCounter', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(translation.appTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -30,7 +32,7 @@ class _SelectPlateState extends State<SelectPlate> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Zaznacz tabliczkę'),
+            Text(translation.selectPlate),
             FloodFillImage(
               imageProvider: FileImage(widget.image),
               fillColor: Colors.amber.withOpacity(0.9),
@@ -48,7 +50,7 @@ class _SelectPlateState extends State<SelectPlate> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Cofnij')),
+                    child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: plateArea != 0
                         ? () {
@@ -61,7 +63,7 @@ class _SelectPlateState extends State<SelectPlate> {
                             );
                           }
                         : null,
-                    child: const Text('Dalej')),
+                    child: Text(translation.nextButton)),
               ],
             ),
           ],
