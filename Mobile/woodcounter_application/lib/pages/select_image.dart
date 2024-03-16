@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:woodcounter_application/pages/draw_border.dart';
 import 'package:woodcounter_application/pages/home.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,13 +14,14 @@ class SelectImage extends StatefulWidget {
 }
 
 class _SelectImageState extends State<SelectImage> {
-  var _image;
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
 
-  void _pickImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+  void _pickImage(ImageSource source) async {
+    final XFile? result = await _picker.pickImage(source: source);
 
     if (result != null) {
-      File file = File(result.files.single.path!);
+      File file = File(result.path);
       setState(() {
         _image = file;
       });
@@ -48,11 +49,11 @@ class _SelectImageState extends State<SelectImage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: _pickImage, child: Text(translation.imageGalleryButton)),
-                ElevatedButton(onPressed: () {}, child: Text(translation.takeAPhotoButton)),
+                    onPressed: () => _pickImage(ImageSource.gallery), child: Text(translation.imageGalleryButton)),
+                ElevatedButton(onPressed: () => _pickImage(ImageSource.camera), child: Text(translation.takeAPhotoButton)),
               ],
             ),
-            if (_image != null) Image.file(_image),
+            if (_image != null) Image.file(_image!),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -70,7 +71,7 @@ class _SelectImageState extends State<SelectImage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DrawBorder(image: _image),
+                          builder: (context) => DrawBorder(image: _image!),
                         ),
                       );
                     },
