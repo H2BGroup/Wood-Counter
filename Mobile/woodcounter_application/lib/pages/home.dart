@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:woodcounter_application/main.dart';
 import 'package:woodcounter_application/pages/select_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -8,6 +9,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var translation = AppLocalizations.of(context)!;
+    var locales = [
+      'pl',
+      'en'
+    ];
 
     return Scaffold(
       body: Center(
@@ -57,6 +62,9 @@ class HomePage extends StatelessWidget {
         ],
         backgroundColor: Colors.green,
         elevation: 0,
+        onTap: (i) => {
+          MyApp.setLocale(context, Locale(locales[i]))
+        },
       ),
     );
   }
