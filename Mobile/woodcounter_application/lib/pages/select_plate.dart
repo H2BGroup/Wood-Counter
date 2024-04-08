@@ -16,14 +16,16 @@ class SelectPlate extends StatefulWidget {
 
 class _SelectPlateState extends State<SelectPlate> {
   int plateArea = 0;
-
+  Offset? platePosition;
+  var originalImageHeight;
+  var scaledImageHeight;
   @override
   Widget build(BuildContext context) {
     var translation = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(translation.appTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(translation.appTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.green,
         leading: Image.asset('assets/icons/stack.png'),
@@ -38,9 +40,13 @@ class _SelectPlateState extends State<SelectPlate> {
               fillColor: Colors.amber.withOpacity(0.9),
               avoidColor: [Colors.transparent],
               tolerance: 50,
-              width: MediaQuery.of(context).size.width.toInt(),
-              onFloodFillEnd: (image, p1) => setState(() {
-                plateArea = p1;
+              onFloodFillEnd: (image, maskSize) => setState(() {
+                plateArea = maskSize;
+                scaledImageHeight = image.height;
+              }),
+              onFloodFillStart: (position, image) => setState(() {
+                platePosition = position;
+                originalImageHeight = image.height;
               }),
             ),
             Row(

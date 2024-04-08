@@ -44,7 +44,7 @@ class FloodFillImage extends StatefulWidget {
   final Function(Offset position, ui.Image image)? onFloodFillStart;
 
   /// Callback function that returns an [Image] from *dart:ui* when flood fill ended.
-  final Function(ui.Image image, int)? onFloodFillEnd;
+  final Function(ui.Image image, int maskSize)? onFloodFillEnd;
 
   final Offset? lastPosition;
 
@@ -160,14 +160,18 @@ class FloodFillImageState extends State<FloodFillImage> {
                 double w = _width!;
                 double h = _height!;
                 if (!constraints.maxWidth.isInfinite) {
-                  if (constraints.maxWidth < _width!) {
+                  if (constraints.maxWidth < w) {
+                    var wPrew = w;
                     w = constraints.maxWidth;
+                    h = h * w/wPrew;
                   }
                 }
 
                 if (!constraints.maxHeight.isInfinite) {
-                  if (constraints.maxHeight < _height!) {
+                  if (constraints.maxHeight < h) {
+                    var hPrev = h;
                     h = constraints.maxHeight;
+                    w = w * h/hPrev;
                   }
                 }
 

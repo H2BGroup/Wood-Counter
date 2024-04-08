@@ -124,7 +124,8 @@ class QueueLinearFloodFiller {
       }
     }
 
-    print(_pixelsChecked);
+    // print(_pixelsChecked);
+    print(_pixelsChecked!.length);
     return _pixelsChecked;
   }
 

@@ -30,8 +30,8 @@ class _SetThresholdState extends State<SetThreshold> {
       avoidColor: [Colors.transparent],
       tolerance: _threshold.toInt(),
       width: MediaQuery.of(context).size.width.toInt(),
-      onFloodFillEnd: (image, p1) => setState(() {
-        stackArea = p1;
+      onFloodFillEnd: (image, maskSize) => setState(() {
+        stackArea = maskSize;
       }),
     );
 
