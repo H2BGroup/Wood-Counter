@@ -6,10 +6,10 @@ import 'package:woodcounter_application/pages/stack_length.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SetThreshold extends StatefulWidget {
-  SetThreshold({super.key, required this.image, required this.plateArea});
+  SetThreshold({super.key, required this.image, required this.platePosition});
 
   final File image;
-  final int plateArea;
+  final Offset platePosition;
 
   @override
   State<SetThreshold> createState() => _SetThresholdState();
@@ -18,6 +18,8 @@ class SetThreshold extends StatefulWidget {
 class _SetThresholdState extends State<SetThreshold> {
   double _threshold = 20;
   int stackArea = 0;
+  int smallImageHeight = 0;
+  Offset? woodPosition;
   final GlobalKey<FloodFillImageState> _floodFillImageKey = GlobalKey();
 
   @override
@@ -29,9 +31,12 @@ class _SetThresholdState extends State<SetThreshold> {
       fillColor: Colors.amber,
       avoidColor: [Colors.transparent],
       tolerance: _threshold.toInt(),
-      width: MediaQuery.of(context).size.width.toInt(),
       onFloodFillEnd: (image, maskSize) => setState(() {
         stackArea = maskSize;
+        smallImageHeight = image.height;
+      }),
+      onFloodFillStart: (position, image) => setState(() {
+        woodPosition = position;
       }),
     );
 
@@ -79,14 +84,20 @@ class _SetThresholdState extends State<SetThreshold> {
                     child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: stackArea != 0
-                        ? () {
+                        ? () async {
+                            var bigImage = await decodeImageFromList(widget.image.readAsBytesSync());
+                            double scale = bigImage.height / smallImageHeight;
+                            print(scale);
+                            print(woodPosition);
+                            print(woodPosition!*scale);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StackLength(
                                     image: widget.image,
-                                    plateArea: widget.plateArea,
-                                    stackArea: stackArea),
+                                    platePosition: widget.platePosition,
+                                    woodPosition: woodPosition!*scale,
+                                    threshold: _threshold),
                               ),
                             );
                           }

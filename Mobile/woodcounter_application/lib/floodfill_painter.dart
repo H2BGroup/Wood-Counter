@@ -164,18 +164,20 @@ class FloodFillPainter extends CustomPainter {
         Paint(),
         BoxFit.fill);
 
-    for (int x = 0; x < w; x++) {
-      for (int y = 0; y < h; y++) {
-        if (mask![x.toInt() + y.toInt() * w.toInt()]) {
-          canvas.drawRect(
-            Rect.fromLTWH(
-              x.toDouble(),
-              y.toDouble(),
-              1,
-              1,
-            ),
-            paint,
-          );
+    if (mask != null) {
+      for (int x = 0; x < w; x++) {
+        for (int y = 0; y < h; y++) {
+          if (mask![x.toInt() + y.toInt() * w.toInt()]) {
+            canvas.drawRect(
+              Rect.fromLTWH(
+                x.toDouble(),
+                y.toDouble(),
+                1,
+                1,
+              ),
+              paint,
+            );
+          }
         }
       }
     }

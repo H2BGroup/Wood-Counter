@@ -164,6 +164,9 @@ class FloodFillImageState extends State<FloodFillImage> {
                     var wPrew = w;
                     w = constraints.maxWidth;
                     h = h * w/wPrew;
+
+                    w = w.floorToDouble();
+                    h = h.floorToDouble();
                   }
                 }
 
@@ -172,6 +175,9 @@ class FloodFillImageState extends State<FloodFillImage> {
                     var hPrev = h;
                     h = constraints.maxHeight;
                     w = w * h/hPrev;
+
+                    w = w.floorToDouble();
+                    h = h.floorToDouble();
                   }
                 }
 

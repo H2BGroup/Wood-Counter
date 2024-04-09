@@ -16,9 +16,8 @@ class SelectPlate extends StatefulWidget {
 
 class _SelectPlateState extends State<SelectPlate> {
   int plateArea = 0;
+  int smallImageHeight = 0;
   Offset? platePosition;
-  var originalImageHeight;
-  var scaledImageHeight;
   @override
   Widget build(BuildContext context) {
     var translation = AppLocalizations.of(context)!;
@@ -42,11 +41,10 @@ class _SelectPlateState extends State<SelectPlate> {
               tolerance: 50,
               onFloodFillEnd: (image, maskSize) => setState(() {
                 plateArea = maskSize;
-                scaledImageHeight = image.height;
+                smallImageHeight = image.height;
               }),
               onFloodFillStart: (position, image) => setState(() {
                 platePosition = position;
-                originalImageHeight = image.height;
               }),
             ),
             Row(
@@ -59,12 +57,17 @@ class _SelectPlateState extends State<SelectPlate> {
                     child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: plateArea != 0
-                        ? () {
+                        ? () async {
+                            var bigImage = await decodeImageFromList(widget.image.readAsBytesSync());
+                            double scale = bigImage.height / smallImageHeight;
+                            print(scale);
+                            print(platePosition);
+                            print(platePosition!*scale);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => SetThreshold(
-                                    image: widget.image, plateArea: plateArea),
+                                    image: widget.image, platePosition: platePosition!*scale),
                               ),
                             );
                           }

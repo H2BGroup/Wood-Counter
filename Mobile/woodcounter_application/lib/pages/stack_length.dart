@@ -7,11 +7,12 @@ import 'package:woodcounter_application/pages/result.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StackLength extends StatefulWidget {
-  const StackLength({super.key, required this.image, required this.plateArea, required this.stackArea});
+  const StackLength({super.key, required this.image, required this.platePosition, required this.woodPosition, required this.threshold});
 
   final File image;
-  final int plateArea;
-  final int stackArea;
+  final Offset platePosition;
+  final Offset woodPosition;
+  final double threshold;
 
   @override
   State<StackLength> createState() => _StackLengthState();
@@ -66,7 +67,7 @@ class _StackLengthState extends State<StackLength> {
                     child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: () {
-                      double stackVolume = calculateStackVolume(widget.stackArea, widget.plateArea, double.parse(myController.text));
+                      double stackVolume = calculateStackVolume(100, 1, double.parse(myController.text));
 
                       Navigator.push(
                         context,
