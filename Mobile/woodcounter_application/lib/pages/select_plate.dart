@@ -59,16 +59,24 @@ class _SelectPlateState extends State<SelectPlate> {
                 ElevatedButton(
                     onPressed: plateArea != 0
                         ? () async {
-                            var bigImage = await decodeImageFromList(widget.image.readAsBytesSync());
+                            var bigImage = await decodeImageFromList(
+                                widget.image.readAsBytesSync());
                             double scale = bigImage.height / smallImageHeight;
                             print(scale);
                             print(platePosition);
-                            print(platePosition!*scale);
+                            print(platePosition! * scale);
+                            Offset scaledPlatePosition = Offset(
+                                (platePosition!.dx.floorToDouble() * scale)
+                                    .floorToDouble(),
+                                (platePosition!.dy.floorToDouble() * scale)
+                                    .floorToDouble());
+                            print(scaledPlatePosition);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => SetThreshold(
-                                    image: widget.image, platePosition: platePosition!*scale),
+                                    image: widget.image,
+                                    platePosition: scaledPlatePosition),
                               ),
                             );
                           }

@@ -90,13 +90,19 @@ class _SetThresholdState extends State<SetThreshold> {
                             print(scale);
                             print(woodPosition);
                             print(woodPosition!*scale);
+                            Offset scaledWoodPosition = Offset(
+                              (woodPosition!.dx.floorToDouble() * scale)
+                                  .floorToDouble(),
+                              (woodPosition!.dy.floorToDouble() * scale)
+                                  .floorToDouble());
+                            print(scaledWoodPosition);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StackLength(
                                     image: widget.image,
                                     platePosition: widget.platePosition,
-                                    woodPosition: woodPosition!*scale,
+                                    woodPosition: scaledWoodPosition,
                                     threshold: _threshold),
                               ),
                             );
