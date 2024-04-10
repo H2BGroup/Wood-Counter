@@ -19,5 +19,8 @@
     "lengthInMeters": "[Długość w metrach]",
 
     "stackVolume": "Objętość stosu",
-    "returnToHomePage": "Powrót do strony głównej"
+    "returnToHomePage": "Powrót do strony głównej",
+
+    "calculating": "Obliczanie",
+    "calculate": "Oblicz"
 }

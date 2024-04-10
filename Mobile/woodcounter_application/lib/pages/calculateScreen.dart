@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'dart:ui' as ui;
-import 'package:image/image.dart' as img;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:woodcounter_application/calculations.dart';
 import 'package:woodcounter_application/pages/result.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:woodcounter_application/queuelinear_floodfiller.dart';
 
 class CalculateScreen extends StatefulWidget {
   const CalculateScreen(
@@ -45,7 +42,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Obliczanie"),
+            Text(translation.calculating),
             ElevatedButton(
                 onPressed: () async {
                   int plateArea = (await floodFillCountPixels(widget.image, widget.platePosition, 50))!;
@@ -63,7 +60,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
                     ),
                   );
                 },
-                child: Text("Oblicz")),
+                child: Text(translation.calculate)),
           ],
         ),
       ),

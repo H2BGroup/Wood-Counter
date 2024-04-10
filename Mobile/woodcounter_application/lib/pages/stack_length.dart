@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:woodcounter_application/calculations.dart';
 import 'package:woodcounter_application/pages/calculateScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

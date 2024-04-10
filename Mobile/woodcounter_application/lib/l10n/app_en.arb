@@ -19,5 +19,8 @@
     "lengthInMeters": "[Lenght in meters]",
 
     "stackVolume": "Stack volume",
-    "returnToHomePage": "Return to home page"
+    "returnToHomePage": "Return to home page",
+
+    "calculating": "Calculating",
+    "calculate": "Calculate"
 }
