@@ -41,6 +41,7 @@ class _SelectPlateState extends State<SelectPlate> {
               tolerance: 50,
               onFloodFillEnd: (image, maskSize) => setState(() {
                 plateArea = maskSize;
+                print(plateArea);
                 smallImageHeight = image.height;
               }),
               onFloodFillStart: (position, image) => setState(() {

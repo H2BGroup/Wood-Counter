@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:woodcounter_application/calculations.dart';
-import 'package:woodcounter_application/pages/result.dart';
+import 'package:woodcounter_application/pages/calculateScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StackLength extends StatefulWidget {
@@ -67,12 +67,11 @@ class _StackLengthState extends State<StackLength> {
                     child: Text(translation.returnButton)),
                 ElevatedButton(
                     onPressed: () {
-                      double stackVolume = calculateStackVolume(100, 1, double.parse(myController.text));
 
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Result(image: widget.image, stackVolume: stackVolume,),
+                          builder: (context) => CalculateScreen(image: widget.image, platePosition: widget.platePosition, woodPosition: widget.woodPosition, threshold: widget.threshold, stackLenght: double.parse(myController.text)),
                         ),
                       );
                     },
