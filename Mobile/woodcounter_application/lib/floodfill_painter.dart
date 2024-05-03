@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:image/image.dart' as img;
 
 import 'queuelinear_floodfiller.dart';
+import 'package:woodcounter_application/calculations.dart';
 
 class FloodFillPainter extends CustomPainter {
   QueueLinearFloodFiller? _filler;
@@ -25,6 +26,8 @@ class FloodFillPainter extends CustomPainter {
   Offset? lastPosition;
   bool? clicked = false;
   List<bool>? mask;
+  Map<Offset, List<bool>> prevMasks = Map<Offset, List<bool>>();
+  bool keepMasks;
 
   FloodFillPainter(
       {required this.image,
@@ -35,7 +38,8 @@ class FloodFillPainter extends CustomPainter {
       this.onInitialize,
       this.lastPosition,
       this.clicked,
-      this.mask})
+      this.mask,
+      this.keepMasks = false})
       : super(repaint: notifier) {
     _initFloodFiller();
   }
@@ -131,6 +135,9 @@ class FloodFillPainter extends CustomPainter {
       (output) async {
         image = output;
         mask = _filler?.getPixelsChecked();
+        if(keepMasks){
+          prevMasks[position] = mask!;
+        }
         notifier!.value = position.toString() + touchColor.toString();
         if (onFloodFillEnd != null)
           onFloodFillEnd!(
@@ -165,9 +172,15 @@ class FloodFillPainter extends CustomPainter {
         BoxFit.fill);
 
     if (mask != null) {
+      List<bool> maskToDraw = mask!;
+      if(keepMasks){
+        prevMasks.forEach((key, value) {
+          maskToDraw = addMasks(maskToDraw, value);
+        });
+      }
       for (int x = 0; x < w; x++) {
         for (int y = 0; y < h; y++) {
-          if (mask![x.toInt() + y.toInt() * w.toInt()]) {
+          if (maskToDraw[x.toInt() + y.toInt() * w.toInt()]) {
             canvas.drawRect(
               Rect.fromLTWH(
                 x.toDouble(),
@@ -198,5 +211,9 @@ class FloodFillPainter extends CustomPainter {
   @override
   bool shouldRepaint(FloodFillPainter oldDelegate) {
     return true;
+  }
+
+  void clearSelection(){
+    prevMasks.clear();
   }
 }

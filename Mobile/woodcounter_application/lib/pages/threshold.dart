@@ -33,6 +33,7 @@ class _SetThresholdState extends State<SetThreshold> {
       fillColor: Colors.amber,
       avoidColor: [Colors.transparent],
       tolerance: _threshold.toInt(),
+      keepMasks: true,
       onFloodFillEnd: (image, maskSize) => setState(() {
         stackArea = maskSize;
         smallImageHeight = image.height;
@@ -91,6 +92,10 @@ class _SetThresholdState extends State<SetThreshold> {
                 ElevatedButton(onPressed: (){        
                       setState(() {
                         woodPoints.clear();
+                        final FloodFillImageState? floodFillImageState = _floodFillImageKey.currentState;
+                        if (floodFillImageState != null) {
+                          floodFillImageState.clearSelection();
+                        }
                       });
                     }, child: Text(translation.clearSelection)),
                 ElevatedButton(

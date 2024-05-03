@@ -48,6 +48,8 @@ class FloodFillImage extends StatefulWidget {
 
   final Offset? lastPosition;
 
+  final bool keepMasks;
+
   /// Flutter widget that can use paint bucket functionality on the provided image.
   const FloodFillImage(
       {Key? key,
@@ -62,7 +64,8 @@ class FloodFillImage extends StatefulWidget {
       this.loadingWidget,
       this.onFloodFillStart,
       this.onFloodFillEnd,
-      this.lastPosition})
+      this.lastPosition,
+      this.keepMasks = false})
       : super(key: key);
 
   @override
@@ -83,6 +86,13 @@ class FloodFillImageState extends State<FloodFillImage> {
         _painter?.fill(_painter!.lastPosition!);
         _repainter?.value = '';
       }
+  }
+
+  void clearSelection(){
+    if(_painter != null){
+      _painter!.clearSelection();
+      update();
+    }
   }
 
   @override
@@ -135,7 +145,8 @@ class FloodFillImageState extends State<FloodFillImage> {
           setState(() {
             //make sure painter is properly initialize
           });
-        });
+        },
+        keepMasks: widget.keepMasks);
   }
 
   @override
