@@ -22,7 +22,7 @@ List<bool> addMasks(List<bool> first, List<bool> second){
   return first;
 }
 
-Future<int?> floodFillCountPixels(File image, Map<Offset, double> points) async{
+Future<List<bool>?> floodFill(File image, Map<Offset, double> points) async{
   var decodedImage = await decodeImageFromList(image.readAsBytesSync());
   ByteData byteData = (await decodedImage.toByteData(format: ui.ImageByteFormat.png))!;
   var bytes = byteData.buffer.asUint8List();
@@ -55,7 +55,7 @@ Future<int?> floodFillCountPixels(File image, Map<Offset, double> points) async{
     finalMask = addMasks(finalMask, newMask!);
   });
   
-  return finalMask.where((object) => object == true).length;
+  return finalMask;
   //return (await filler.floodFill(pX, pY))!.where((object) => object == true).length;
 }
 

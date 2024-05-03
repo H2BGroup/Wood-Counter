@@ -43,8 +43,10 @@ class _CalculateScreenState extends State<CalculateScreen> {
             Text(translation.calculating),
             ElevatedButton(
                 onPressed: () async {
-                  int plateArea = (await floodFillCountPixels(widget.image, {widget.platePosition: 50}))!;
-                  int woodArea = (await floodFillCountPixels(widget.image, widget.points))!;
+                  List<bool> plateMask = (await floodFill(widget.image, {widget.platePosition: 50}))!;
+                  List<bool> woodMask = (await floodFill(widget.image, widget.points))!;
+                  int plateArea = plateMask.where((object) => object == true).length;
+                  int woodArea = woodMask.where((object) => object == true).length;
                   double stackVolume = calculateStackVolume(woodArea, plateArea, widget.stackLenght);
                   print(plateArea);
                   print(woodArea);

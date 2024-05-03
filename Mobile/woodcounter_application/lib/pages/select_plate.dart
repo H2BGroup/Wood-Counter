@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:path_provider/path_provider.dart';
 import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/threshold.dart';

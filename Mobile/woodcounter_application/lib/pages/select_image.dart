@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:woodcounter_application/pages/draw_border.dart';
 import 'package:woodcounter_application/pages/home.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:woodcounter_application/pages/select_plate.dart';
 
 class SelectImage extends StatefulWidget {
   const SelectImage({super.key});
@@ -71,7 +71,7 @@ class _SelectImageState extends State<SelectImage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DrawBorder(image: _image!),
+                          builder: (context) => SelectPlate(image: _image!),
                         ),
                       );
                     } : null,

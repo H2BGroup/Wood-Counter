@@ -92,7 +92,7 @@ class _SetThresholdState extends State<SetThreshold> {
                       setState(() {
                         woodPoints.clear();
                       });
-                    }, child: Text("Clear selection")),
+                    }, child: Text(translation.clearSelection)),
                 ElevatedButton(
                     onPressed: stackArea != 0
                         ? () async {
