@@ -15,26 +15,46 @@ double calculateStackVolume(int stackArea, int plateArea, double stackLength)
   return (fullStackArea * rate * stackLength * 1000) / 1000000000;
 }
 
-Future<int?> floodFillCountPixels(File image, Offset startPoint, double threshold) async{
+List<bool> addMasks(List<bool> first, List<bool> second){
+  for(int i=0; i<first.length; i++){
+    first[i] = first[i] || second[i];
+  }
+  return first;
+}
+
+Future<int?> floodFillCountPixels(File image, Map<Offset, double> points) async{
   var decodedImage = await decodeImageFromList(image.readAsBytesSync());
   ByteData byteData = (await decodedImage.toByteData(format: ui.ImageByteFormat.png))!;
   var bytes = byteData.buffer.asUint8List();
   img.Image decoded = img.decodeImage(bytes)!;
   Color fillColor = Colors.amber.withOpacity(0.9);
-  var filler = QueueLinearFloodFiller(
+
+  List<bool> finalMask = List.generate(decodedImage.height*decodedImage.width, (int index) => false);
+
+  await Future.forEach(points.entries, (MapEntry<Offset, double> p) async {
+    print(finalMask);
+    print(finalMask.length);
+    var filler = QueueLinearFloodFiller(
       decoded,
       img.getColor(
           fillColor.red, fillColor.green, fillColor.blue, fillColor.alpha));
-  int pX = startPoint.dx.toInt();
-  int pY = startPoint.dy.toInt();
+    int pX = p.key.dx.toInt();
+    int pY = p.key.dy.toInt();
 
-  print(startPoint);
-  print('X: $pX');
-  print('Y: $pY');
+    print(p.key);
+    print('X: $pX');
+    print('Y: $pY');
 
-  int touchColor = filler.image!.getPixelSafe(pX, pY);
+    int touchColor = filler.image!.getPixelSafe(pX, pY);
 
-  filler.setTargetColor(touchColor);
-  filler.setTolerance(threshold.toInt());
-  return (await filler.floodFill(pX, pY))!.where((object) => object == true).length;
+    filler.setTargetColor(touchColor);
+    filler.setTolerance(p.value.toInt());
+    var newMask = await filler.floodFill(pX, pY);
+    print(newMask);
+    print(newMask!.length);
+    finalMask = addMasks(finalMask, newMask!);
+  });
+  
+  return finalMask.where((object) => object == true).length;
+  //return (await filler.floodFill(pX, pY))!.where((object) => object == true).length;
 }

@@ -6,12 +6,11 @@ import 'package:woodcounter_application/pages/calculateScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StackLength extends StatefulWidget {
-  const StackLength({super.key, required this.image, required this.platePosition, required this.woodPosition, required this.threshold});
+  const StackLength({super.key, required this.image, required this.platePosition, required this.points});
 
   final File image;
   final Offset platePosition;
-  final Offset woodPosition;
-  final double threshold;
+  final Map<Offset, double> points;
 
   @override
   State<StackLength> createState() => _StackLengthState();
@@ -70,7 +69,7 @@ class _StackLengthState extends State<StackLength> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CalculateScreen(image: widget.image, platePosition: widget.platePosition, woodPosition: widget.woodPosition, threshold: widget.threshold, stackLenght: double.parse(myController.text)),
+                          builder: (context) => CalculateScreen(image: widget.image, platePosition: widget.platePosition, points: widget.points, stackLenght: double.parse(myController.text)),
                         ),
                       );
                     },

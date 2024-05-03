@@ -11,14 +11,12 @@ class CalculateScreen extends StatefulWidget {
       {super.key,
       required this.image,
       required this.platePosition,
-      required this.woodPosition,
-      required this.threshold,
+      required this.points,
       required this.stackLenght});
 
   final File image;
   final Offset platePosition;
-  final Offset woodPosition;
-  final double threshold;
+  final Map<Offset, double> points;
   final double stackLenght;
 
   @override
@@ -45,8 +43,8 @@ class _CalculateScreenState extends State<CalculateScreen> {
             Text(translation.calculating),
             ElevatedButton(
                 onPressed: () async {
-                  int plateArea = (await floodFillCountPixels(widget.image, widget.platePosition, 50))!;
-                  int woodArea = (await floodFillCountPixels(widget.image, widget.woodPosition, widget.threshold))!;
+                  int plateArea = (await floodFillCountPixels(widget.image, {widget.platePosition: 50}))!;
+                  int woodArea = (await floodFillCountPixels(widget.image, widget.points))!;
                   double stackVolume = calculateStackVolume(woodArea, plateArea, widget.stackLenght);
                   print(plateArea);
                   print(woodArea);

@@ -102,8 +102,7 @@ class _SetThresholdState extends State<SetThreshold> {
                                 builder: (context) => StackLength(
                                     image: widget.image,
                                     platePosition: widget.platePosition,
-                                    woodPosition: scaledWoodPosition,
-                                    threshold: _threshold),
+                                    points: {scaledWoodPosition: _threshold}),
                               ),
                             );
                           }
