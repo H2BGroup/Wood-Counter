@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
 import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/threshold.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:woodcounter_application/calculations.dart';
 
 class SelectPlate extends StatefulWidget {
   const SelectPlate({super.key, required this.image});
@@ -59,18 +61,8 @@ class _SelectPlateState extends State<SelectPlate> {
                 ElevatedButton(
                     onPressed: plateArea != 0
                         ? () async {
-                            var bigImage = await decodeImageFromList(
-                                widget.image.readAsBytesSync());
-                            double scale = bigImage.height / smallImageHeight;
-                            print(scale);
-                            print(platePosition);
-                            print(platePosition! * scale);
-                            Offset scaledPlatePosition = Offset(
-                                (platePosition!.dx.floorToDouble() * scale)
-                                    .floorToDouble(),
-                                (platePosition!.dy.floorToDouble() * scale)
-                                    .floorToDouble());
-                            print(scaledPlatePosition);
+                            var bigImage = await decodeImageFromList(widget.image.readAsBytesSync());
+                            Offset scaledPlatePosition = scalePointToBiggerRes(bigImage.height, smallImageHeight, platePosition!);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

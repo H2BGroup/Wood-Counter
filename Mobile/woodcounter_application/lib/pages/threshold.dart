@@ -4,6 +4,7 @@ import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/stack_length.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:woodcounter_application/calculations.dart';
 
 class SetThreshold extends StatefulWidget {
   SetThreshold({super.key, required this.image, required this.platePosition});
@@ -21,6 +22,7 @@ class _SetThresholdState extends State<SetThreshold> {
   int smallImageHeight = 0;
   Offset? woodPosition;
   final GlobalKey<FloodFillImageState> _floodFillImageKey = GlobalKey();
+  Map<Offset, double> woodPoints = new Map<Offset, double>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class _SetThresholdState extends State<SetThreshold> {
       }),
       onFloodFillStart: (position, image) => setState(() {
         woodPosition = position;
+        woodPoints[position] = _threshold;
       }),
     );
 
@@ -74,6 +77,9 @@ class _SetThresholdState extends State<SetThreshold> {
                 }
               },
             ),
+            Column(
+              children: woodPoints != null ? woodPoints.entries.map((e) => Text(e.key.dx.toStringAsFixed(2) + " " + e.key.dy.toStringAsFixed(2) + " "+ e.value.toString())).toList() : []
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -82,27 +88,27 @@ class _SetThresholdState extends State<SetThreshold> {
                       Navigator.pop(context);
                     },
                     child: Text(translation.returnButton)),
+                ElevatedButton(onPressed: (){        
+                      setState(() {
+                        woodPoints.clear();
+                      });
+                    }, child: Text("Clear selection")),
                 ElevatedButton(
                     onPressed: stackArea != 0
                         ? () async {
                             var bigImage = await decodeImageFromList(widget.image.readAsBytesSync());
-                            double scale = bigImage.height / smallImageHeight;
-                            print(scale);
-                            print(woodPosition);
-                            print(woodPosition!*scale);
-                            Offset scaledWoodPosition = Offset(
-                              (woodPosition!.dx.floorToDouble() * scale)
-                                  .floorToDouble(),
-                              (woodPosition!.dy.floorToDouble() * scale)
-                                  .floorToDouble());
-                            print(scaledWoodPosition);
+                            Map<Offset, double> scaledWoodPoints = Map<Offset, double>();
+                            woodPoints.forEach((key, value) {
+                              Offset scaledWoodPoint = scalePointToBiggerRes(bigImage.height, smallImageHeight, key);
+                              scaledWoodPoints[scaledWoodPoint] = value;
+                            });
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StackLength(
                                     image: widget.image,
                                     platePosition: widget.platePosition,
-                                    points: {scaledWoodPosition: _threshold}),
+                                    points: scaledWoodPoints),
                               ),
                             );
                           }

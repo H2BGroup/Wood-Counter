@@ -58,3 +58,15 @@ Future<int?> floodFillCountPixels(File image, Map<Offset, double> points) async{
   return finalMask.where((object) => object == true).length;
   //return (await filler.floodFill(pX, pY))!.where((object) => object == true).length;
 }
+
+Offset scalePointToBiggerRes(int bigImageHeight, int smallImageHeight, Offset position) {
+  double scale = bigImageHeight / smallImageHeight;
+  print(scale);
+  print(position);
+  print(position * scale);
+  Offset scaledPosition = Offset(
+      (position.dx.floorToDouble() * scale).floorToDouble(),
+      (position.dy.floorToDouble() * scale).floorToDouble());
+  print(scaledPosition);
+  return scaledPosition;
+}
