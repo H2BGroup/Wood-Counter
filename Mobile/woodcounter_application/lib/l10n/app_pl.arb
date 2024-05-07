@@ -20,6 +20,7 @@
     "lengthInMeters": "[Długość w metrach]",
 
     "stackVolume": "Objętość stosu",
+    "error": "Błąd pomiaru",
     "returnToHomePage": "Powrót do strony głównej",
 
     "calculating": "Obliczanie",

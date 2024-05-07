@@ -20,6 +20,7 @@
     "lengthInMeters": "[Lenght in meters]",
 
     "stackVolume": "Stack volume",
+    "error": "Measurement error",
     "returnToHomePage": "Return to home page",
 
     "calculating": "Calculating",

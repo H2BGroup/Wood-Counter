@@ -48,6 +48,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
                   int plateArea = plateMask.where((object) => object == true).length;
                   int woodArea = woodMask.where((object) => object == true).length;
                   double stackVolume = calculateStackVolume(woodArea, plateArea, widget.stackLenght);
+                  double error = calculateError(plateArea);
                   print(plateArea);
                   print(woodArea);
                   Navigator.push(
@@ -56,6 +57,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
                       builder: (context) => Result(
                         image: widget.image,
                         stackVolume: stackVolume,
+                        error: error
                       ),
                     ),
                   );

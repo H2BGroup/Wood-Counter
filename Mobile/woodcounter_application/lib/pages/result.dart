@@ -5,10 +5,11 @@ import 'package:woodcounter_application/pages/home.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Result extends StatelessWidget {
-  const Result({super.key, required this.image, required this.stackVolume});
+  const Result({super.key, required this.image, required this.stackVolume, required this.error});
 
   final File image;
   final double stackVolume;
+  final double error;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,8 @@ class Result extends StatelessWidget {
             Image.file(image),
             Text(translation.stackVolume),
             Text(stackVolume.toStringAsFixed(2)),
+            Text(translation.error),
+            Text("${error.toStringAsFixed(2)}%"),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
