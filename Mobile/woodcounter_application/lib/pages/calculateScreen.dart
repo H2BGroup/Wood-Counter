@@ -2,22 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:woodcounter_application/calculations.dart';
 import 'package:woodcounter_application/pages/result.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CalculateScreen extends StatefulWidget {
-  const CalculateScreen(
-      {super.key,
-      required this.image,
-      required this.platePosition,
-      required this.points,
-      required this.stackLenght});
-
-  final File image;
-  final Offset platePosition;
-  final Map<Offset, double> points;
-  final double stackLenght;
+  const CalculateScreen({super.key});
 
   @override
   State<CalculateScreen> createState() => _CalculateScreenState();
@@ -40,29 +31,11 @@ class _CalculateScreenState extends State<CalculateScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SpinKitPouringHourGlass(
+              color: Colors.white,
+              size: 100,
+            ),
             Text(translation.calculating),
-            ElevatedButton(
-                onPressed: () async {
-                  List<bool> plateMask = (await floodFill(widget.image, {widget.platePosition: 50}))!;
-                  List<bool> woodMask = (await floodFill(widget.image, widget.points))!;
-                  int plateArea = plateMask.where((object) => object == true).length;
-                  int woodArea = woodMask.where((object) => object == true).length;
-                  double stackVolume = calculateStackVolume(woodArea, plateArea, widget.stackLenght);
-                  double error = calculateError(plateArea);
-                  print(plateArea);
-                  print(woodArea);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Result(
-                        image: widget.image,
-                        stackVolume: stackVolume,
-                        error: error
-                      ),
-                    ),
-                  );
-                },
-                child: Text(translation.calculate)),
           ],
         ),
       ),
