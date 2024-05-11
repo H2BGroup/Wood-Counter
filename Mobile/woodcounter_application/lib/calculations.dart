@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:woodcounter_application/queuelinear_floodfiller.dart';
 
-const plateAreaInMM = 1161;
+const plateWidthInMM = 27;
+const plateHeightInMM = 43;
+const plateAreaInMM = plateHeightInMM * plateWidthInMM;
 
 double calculateStackVolume(int stackArea, int plateArea, double stackLength) {
   int fullStackArea = stackArea + plateArea;
