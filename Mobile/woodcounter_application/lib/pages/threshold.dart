@@ -27,22 +27,6 @@ class _SetThresholdState extends State<SetThreshold> {
   @override
   Widget build(BuildContext context) {
     var translation = AppLocalizations.of(context)!;
-    Widget xd = FloodFillImage(
-      key: _floodFillImageKey,
-      imageProvider: FileImage(widget.image),
-      fillColor: Colors.amber,
-      avoidColor: [Colors.transparent],
-      tolerance: _threshold.toInt(),
-      keepMasks: true,
-      onFloodFillEnd: (image, maskSize) => setState(() {
-        stackArea = maskSize;
-        smallImageHeight = image.height;
-      }),
-      onFloodFillStart: (position, image) => setState(() {
-        woodPosition = position;
-        woodPoints[position] = _threshold;
-      }),
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +41,22 @@ class _SetThresholdState extends State<SetThreshold> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(translation.selectThreshold),
-            xd,
+            FloodFillImage(
+              key: _floodFillImageKey,
+              imageProvider: FileImage(widget.image),
+              fillColor: Colors.amber,
+              avoidColor: [Colors.transparent],
+              tolerance: _threshold.toInt(),
+              keepMasks: true,
+              onFloodFillEnd: (image, maskSize) => setState(() {
+                stackArea = maskSize;
+                smallImageHeight = image.height;
+              }),
+              onFloodFillStart: (position, image) => setState(() {
+                woodPosition = position;
+                woodPoints[position] = _threshold;
+              }),
+            ),
             Slider(
               value: _threshold,
               max: 100,
@@ -79,8 +78,15 @@ class _SetThresholdState extends State<SetThreshold> {
               },
             ),
             Column(
-              children: woodPoints != null ? woodPoints.entries.map((e) => Text(e.key.dx.toStringAsFixed(2) + " " + e.key.dy.toStringAsFixed(2) + " "+ e.value.toString())).toList() : []
-            ),
+                children: woodPoints != null
+                    ? woodPoints.entries
+                        .map((e) => Text(e.key.dx.toStringAsFixed(2) +
+                            " " +
+                            e.key.dy.toStringAsFixed(2) +
+                            " " +
+                            e.value.toString()))
+                        .toList()
+                    : []),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -89,22 +95,28 @@ class _SetThresholdState extends State<SetThreshold> {
                       Navigator.pop(context);
                     },
                     child: Text(translation.returnButton)),
-                ElevatedButton(onPressed: (){        
+                ElevatedButton(
+                    onPressed: () {
                       setState(() {
                         woodPoints.clear();
-                        final FloodFillImageState? floodFillImageState = _floodFillImageKey.currentState;
+                        final FloodFillImageState? floodFillImageState =
+                            _floodFillImageKey.currentState;
                         if (floodFillImageState != null) {
                           floodFillImageState.clearSelection();
                         }
                       });
-                    }, child: Text(translation.clearSelection)),
+                    },
+                    child: Text(translation.clearSelection)),
                 ElevatedButton(
                     onPressed: stackArea != 0
                         ? () async {
-                            var bigImage = await decodeImageFromList(widget.image.readAsBytesSync());
-                            Map<Offset, double> scaledWoodPoints = Map<Offset, double>();
+                            var bigImage = await decodeImageFromList(
+                                widget.image.readAsBytesSync());
+                            Map<Offset, double> scaledWoodPoints =
+                                Map<Offset, double>();
                             woodPoints.forEach((key, value) {
-                              Offset scaledWoodPoint = scalePointToBiggerRes(bigImage.height, smallImageHeight, key);
+                              Offset scaledWoodPoint = scalePointToBiggerRes(
+                                  bigImage.height, smallImageHeight, key);
                               scaledWoodPoints[scaledWoodPoint] = value;
                             });
                             Navigator.push(
