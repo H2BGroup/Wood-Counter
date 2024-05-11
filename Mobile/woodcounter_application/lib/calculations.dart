@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:woodcounter_application/morphological_operations.dart';
 import 'package:woodcounter_application/queuelinear_floodfiller.dart';
 
 const plateWidthInMM = 27;
@@ -59,6 +60,14 @@ Future<List<bool>?> floodFill(File image, Map<Offset, double> points) async {
     finalMask = addMasks(finalMask, newMask!);
   });
 
+  //opening
+  finalMask = erosion(finalMask, decodedImage.height, decodedImage.width);
+  finalMask = dilation(finalMask, decodedImage.height, decodedImage.width);
+
+  //closing
+  finalMask = dilation(finalMask, decodedImage.height, decodedImage.width);
+  finalMask = erosion(finalMask, decodedImage.height, decodedImage.width);
+
   return finalMask;
   //return (await filler.floodFill(pX, pY))!.where((object) => object == true).length;
 }
@@ -79,7 +88,6 @@ Offset scalePointToBiggerRes(
 double calculateError(int plateArea) {
   double x = sqrt(plateArea / (plateWidthInMM / plateHeightInMM));
   double y = plateWidthInMM / plateHeightInMM * x;
-
 
   print("Plate Area: $plateArea");
   print("X: $x");

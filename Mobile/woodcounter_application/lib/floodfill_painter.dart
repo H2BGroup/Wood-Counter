@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image/image.dart' as img;
+import 'package:woodcounter_application/morphological_operations.dart';
 
 import 'queuelinear_floodfiller.dart';
 import 'package:woodcounter_application/calculations.dart';
@@ -178,6 +179,15 @@ class FloodFillPainter extends CustomPainter {
           maskToDraw = addMasks(maskToDraw, value);
         });
       }
+
+      //opening
+      maskToDraw = erosion(maskToDraw, h.toInt(), w.toInt());
+      maskToDraw = dilation(maskToDraw, h.toInt(), w.toInt());
+      
+      //closing
+      maskToDraw = dilation(maskToDraw, h.toInt(), w.toInt());
+      maskToDraw = erosion(maskToDraw, h.toInt(), w.toInt());
+
       for (int x = 0; x < w; x++) {
         for (int y = 0; y < h; y++) {
           if (maskToDraw[x.toInt() + y.toInt() * w.toInt()]) {
