@@ -77,8 +77,8 @@ Offset scalePointToBiggerRes(
 }
 
 double calculateError(int plateArea) {
-  double x = sqrt(plateArea / (27 / 43));
-  double y = 27 / 43 * x;
+  double x = sqrt(plateArea / (plateWidthInMM / plateHeightInMM));
+  double y = plateWidthInMM / plateHeightInMM * x;
 
 
   print("Plate Area: $plateArea");
