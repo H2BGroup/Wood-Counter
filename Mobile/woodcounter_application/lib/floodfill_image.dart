@@ -95,6 +95,13 @@ class FloodFillImageState extends State<FloodFillImage> {
     }
   }
 
+  void emulateTap(Offset position){
+    if(_painter != null){
+      _painter!.hitTest(position);
+      update();
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

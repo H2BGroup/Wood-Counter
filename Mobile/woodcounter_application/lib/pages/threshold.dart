@@ -77,16 +77,17 @@ class _SetThresholdState extends State<SetThreshold> {
                 }
               },
             ),
-            Column(
-                children: woodPoints != null
-                    ? woodPoints.entries
+            Expanded( 
+            child: SingleChildScrollView(
+            child: Column(
+                children: woodPoints.entries
                         .map((e) => Text(e.key.dx.toStringAsFixed(2) +
                             " " +
                             e.key.dy.toStringAsFixed(2) +
                             " " +
                             e.value.toString()))
                         .toList()
-                    : []),
+            ))),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
