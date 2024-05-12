@@ -7,6 +7,8 @@ import 'package:woodcounter_application/pages/threshold.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:woodcounter_application/calculations.dart';
 
+const double magnifierRadius = 50;
+
 class SelectPlate extends StatefulWidget {
   const SelectPlate({super.key, required this.image});
 
@@ -93,45 +95,45 @@ class _SelectPlateState extends State<SelectPlate> {
                       left: dragGesturePosition.dx,
                       top: dragGesturePosition.dy,
                       child: RawMagnifier(
-                          focalPointOffset: Offset(-50, -50),
+                          focalPointOffset: const Offset(-magnifierRadius, -magnifierRadius),
                           decoration: const MagnifierDecoration(
                               shape: CircleBorder(
                                   side: BorderSide(
                                       color: Colors.blue, width: 3))),
-                          size: Size(100, 100),
+                          size: const Size(2*magnifierRadius, 2*magnifierRadius),
                           magnificationScale: 3,
                           child: Stack(
                             children: [
                               Positioned(
-                                left: 50,
-                                top: 50,
+                                left: magnifierRadius,
+                                top: magnifierRadius,
                                 child: Container(
                                   width: 1,
-                                  height: 50,
+                                  height: magnifierRadius,
                                   color: Colors.red, // Kolor krzyżyka
                                 ),
                               ),
                               Positioned(
-                                top: 50,
-                                left: 50,
+                                top: magnifierRadius,
+                                left: magnifierRadius,
                                 child: Container(
-                                  width: 50,
+                                  width: magnifierRadius,
                                   height: 1,
                                   color: Colors.red, // Kolor krzyżyka
                                 ),
                               ),
                               Positioned(
-                                left: 50,
+                                left: magnifierRadius,
                                 child: Container(
                                   width: 1,
-                                  height: 50,
+                                  height: magnifierRadius,
                                   color: Colors.red, // Kolor krzyżyka
                                 ),
                               ),
                               Positioned(
-                                top: 50,
+                                top: magnifierRadius,
                                 child: Container(
-                                  width: 50,
+                                  width: magnifierRadius,
                                   height: 1,
                                   color: Colors.red, // Kolor krzyżyka
                                 ),
@@ -150,7 +152,7 @@ class _SelectPlateState extends State<SelectPlate> {
                     child: Text(translation.returnButton)),
                 Column(
                   children: [
-                    Text("Enable magnifier"),
+                    Text(translation.enableMagnifier),
                     Switch(
                     value: enableMagnifier,
                     onChanged: (value) {

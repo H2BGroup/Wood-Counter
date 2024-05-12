@@ -11,6 +11,7 @@
     "drawBorder": "Draw a border around wood stack",
 
     "selectPlate": "Select plate",
+    "enableMagnifier": "Enable magnifier",
 
     "selectThreshold": "Select range of measurement",
     "clearSelection": "Clear selection",
