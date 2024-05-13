@@ -225,5 +225,6 @@ class FloodFillPainter extends CustomPainter {
 
   void clearSelection(){
     prevMasks.clear();
+    mask = null;
   }
 }

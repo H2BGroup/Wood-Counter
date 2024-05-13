@@ -91,6 +91,7 @@ class FloodFillImageState extends State<FloodFillImage> {
   void clearSelection(){
     if(_painter != null){
       _painter!.clearSelection();
+      _painter!.hitTest(Offset(-1, -1));
       update();
     }
   }

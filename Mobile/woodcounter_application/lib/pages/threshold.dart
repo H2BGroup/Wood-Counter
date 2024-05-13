@@ -62,6 +62,7 @@ class _SetThresholdState extends State<SetThreshold> {
               max: 100,
               divisions: 100,
               label: _threshold.round().toString(),
+              activeColor: Colors.green[900],
               onChanged: (double value) {
                 setState(
                   () {
@@ -77,17 +78,6 @@ class _SetThresholdState extends State<SetThreshold> {
                 }
               },
             ),
-            Expanded( 
-            child: SingleChildScrollView(
-            child: Column(
-                children: woodPoints.entries
-                        .map((e) => Text(e.key.dx.toStringAsFixed(2) +
-                            " " +
-                            e.key.dy.toStringAsFixed(2) +
-                            " " +
-                            e.value.toString()))
-                        .toList()
-            ))),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -104,6 +94,7 @@ class _SetThresholdState extends State<SetThreshold> {
                             _floodFillImageKey.currentState;
                         if (floodFillImageState != null) {
                           floodFillImageState.clearSelection();
+                          stackArea = 0;
                         }
                       });
                     },
