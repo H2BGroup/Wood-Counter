@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/main.dart';
 import 'package:woodcounter_application/pages/select_image.dart';
@@ -40,7 +42,7 @@ class HomePage extends StatelessWidget {
                 );
               },
               child: Text(translation.startButton,
-                  style: const TextStyle(color: Colors.green, fontSize: 40)),
+                  style: TextStyle(foreground: Paint() ..color = Colors.green, fontSize: 40)),
             ),
           ],
         ),

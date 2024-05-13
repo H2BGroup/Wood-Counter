@@ -19,8 +19,7 @@ class MyApp extends StatefulWidget {
   }
 }
 
-class _MyAppState extends State<MyApp>{
-
+class _MyAppState extends State<MyApp> {
   Locale? _locale;
 
   setLocale(Locale locale) {
@@ -44,11 +43,16 @@ class _MyAppState extends State<MyApp>{
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en',''),
+        Locale('en', ''),
         Locale('pl', ''),
       ],
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.green
+        scaffoldBackgroundColor: Colors.green,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(foreground: Paint()..color = Colors.black),
+          ),
+        ),
       ),
       home: const HomePage(),
     );
