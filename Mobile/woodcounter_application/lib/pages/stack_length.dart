@@ -26,6 +26,7 @@ class _StackLengthState extends State<StackLength> {
   final myController = TextEditingController();
   RegExp _numberRegex = RegExp(r'^\d*\.?\d*$');
   bool _isloading = false;
+  bool _buttonEnable = false;
 
   @override
   void dispose() {
@@ -58,6 +59,15 @@ class _StackLengthState extends State<StackLength> {
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(_numberRegex)
                     ],
+                    onChanged: (text) {
+                      if (text.isNotEmpty) {
+                        setState(() {
+                          _buttonEnable = true;
+                        });
+                      } else {
+                        _buttonEnable = false;
+                      }
+                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: translation.lengthInMeters,
@@ -72,38 +82,43 @@ class _StackLengthState extends State<StackLength> {
                           },
                           child: Text(translation.returnButton)),
                       ElevatedButton(
-                          onPressed: () async {
-                            setState(() {
-                              _isloading = true;
-                            });
-                            List<bool> plateMask = (await floodFill(
-                                widget.image, {widget.platePosition: 50}))!;
-                            List<bool> woodMask =
-                                (await floodFill(widget.image, widget.points))!;
-                            int plateArea = plateMask
-                                .where((object) => object == true)
-                                .length;
-                            int woodArea = woodMask
-                                .where((object) => object == true)
-                                .length;
-                            double stackVolume = calculateStackVolume(woodArea,
-                                plateArea, double.parse(myController.text));
-                            double error = calculateError(plateArea);
-                            setState(() {
-                              _isloading = false;
-                            });
-                            print(plateArea);
-                            print(woodArea);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Result(
-                                    image: widget.image,
-                                    stackVolume: stackVolume,
-                                    error: error),
-                              ),
-                            );
-                          },
+                          onPressed: _buttonEnable == true
+                              ? () async {
+                                  setState(() {
+                                    _isloading = true;
+                                  });
+                                  List<bool> plateMask = (await floodFill(
+                                      widget.image,
+                                      {widget.platePosition: 50}))!;
+                                  List<bool> woodMask = (await floodFill(
+                                      widget.image, widget.points))!;
+                                  int plateArea = plateMask
+                                      .where((object) => object == true)
+                                      .length;
+                                  int woodArea = woodMask
+                                      .where((object) => object == true)
+                                      .length;
+                                  double stackVolume = calculateStackVolume(
+                                      woodArea,
+                                      plateArea,
+                                      double.parse(myController.text));
+                                  double error = calculateError(plateArea);
+                                  setState(() {
+                                    _isloading = false;
+                                  });
+                                  print(plateArea);
+                                  print(woodArea);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Result(
+                                          image: widget.image,
+                                          stackVolume: stackVolume,
+                                          error: error),
+                                    ),
+                                  );
+                                }
+                              : null,
                           child: Text(translation.nextButton)),
                     ],
                   ),
