@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/gestures.dart';
 import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/threshold.dart';
@@ -24,7 +23,6 @@ class _SelectPlateState extends State<SelectPlate> {
   Offset? platePosition;
   Offset dragGesturePosition = Offset.zero;
   bool showMagnifier = false;
-  bool enableMagnifier = true;
   final GlobalKey<FloodFillImageState> _floodFillImageKey = GlobalKey();
 
   @override
@@ -47,26 +45,22 @@ class _SelectPlateState extends State<SelectPlate> {
               children: <Widget>[
                 GestureDetector(
                   onPanStart: (DragStartDetails details) {
-                    if (enableMagnifier) {
-                      setState(() {
-                        showMagnifier = true;
-                      });
-                    }
+                    setState(() {
+                      showMagnifier = true;
+                    });
                   },
                   onPanUpdate: (DragUpdateDetails details) => setState(() {
                     dragGesturePosition = details.localPosition;
                   }),
                   onPanEnd: (DragEndDetails details) {
-                    if (enableMagnifier) {
-                      setState(() {
-                        showMagnifier = false;
-                        final FloodFillImageState? floodFillImageState =
-                            _floodFillImageKey.currentState;
-                        if (floodFillImageState != null) {
-                          floodFillImageState.emulateTap(dragGesturePosition);
-                        }
-                      });
-                    }
+                    setState(() {
+                      showMagnifier = false;
+                      final FloodFillImageState? floodFillImageState =
+                          _floodFillImageKey.currentState;
+                      if (floodFillImageState != null) {
+                        floodFillImageState.emulateTap(dragGesturePosition);
+                      }
+                    });
                   },
                   onTapDown: (TapDownDetails details) {
                     //empty but need to be defined to distinguish tap from drag
@@ -95,12 +89,14 @@ class _SelectPlateState extends State<SelectPlate> {
                       left: dragGesturePosition.dx,
                       top: dragGesturePosition.dy,
                       child: RawMagnifier(
-                          focalPointOffset: const Offset(-magnifierRadius, -magnifierRadius),
+                          focalPointOffset:
+                              const Offset(-magnifierRadius, -magnifierRadius),
                           decoration: const MagnifierDecoration(
                               shape: CircleBorder(
                                   side: BorderSide(
                                       color: Colors.blue, width: 3))),
-                          size: const Size(2*magnifierRadius, 2*magnifierRadius),
+                          size: const Size(
+                              2 * magnifierRadius, 2 * magnifierRadius),
                           magnificationScale: 3,
                           child: Stack(
                             children: [
@@ -150,18 +146,6 @@ class _SelectPlateState extends State<SelectPlate> {
                       Navigator.pop(context);
                     },
                     child: Text(translation.returnButton)),
-                Column(
-                  children: [
-                    Text(translation.enableMagnifier),
-                    Switch(
-                    value: enableMagnifier,
-                    onChanged: (value) {
-                      setState(() {
-                        enableMagnifier = value;
-                      });
-                    }),
-                  ],
-                ),
                 ElevatedButton(
                     onPressed: plateArea != 0
                         ? () async {
