@@ -28,7 +28,13 @@ class Result extends StatelessWidget {
           children: [
             Image.file(image),
             Text(translation.stackVolume, style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
-            Text(stackVolume.toStringAsFixed(2), style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
+            RichText(text: TextSpan(
+            children: 
+            [TextSpan(text: stackVolume.toStringAsFixed(2) + " m"),
+            TextSpan(text: "3", style: TextStyle(fontFeatures: [FontFeature.superscripts()])),
+            ], 
+            style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
+            ), 
             Text(translation.error, style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
             Text("${error.toStringAsFixed(2)}%", style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
             ElevatedButton(
