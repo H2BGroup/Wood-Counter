@@ -43,17 +43,19 @@ class _StackLengthState extends State<StackLength> {
         : Scaffold(
             appBar: AppBar(
               title: Text(translation.appTitle,
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              style: TextStyle(fontWeight: FontWeight.w900, foreground: Paint() ..color = Colors.white, letterSpacing: 1)),
               centerTitle: true,
-              backgroundColor: Colors.green,
+              backgroundColor: Color.fromARGB(255, 8, 130, 42),
               leading: Image.asset('assets/icons/stack.png'),
             ),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(translation.giveLength),
+                  Text(translation.giveLength,
+                  style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
                   TextField(
+                    style: TextStyle(fontWeight: FontWeight.w500, foreground: Paint() ..color = Colors.white, fontSize: 15),
                     keyboardType: TextInputType.number,
                     controller: myController,
                     inputFormatters: <TextInputFormatter>[
@@ -69,8 +71,9 @@ class _StackLengthState extends State<StackLength> {
                       }
                     },
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(25.0))),
                       hintText: translation.lengthInMeters,
+                      hintStyle: TextStyle(fontWeight: FontWeight.w500, foreground: Paint() ..color = Colors.white, fontSize: 15),
                     ),
                   ),
                   Row(
@@ -80,7 +83,7 @@ class _StackLengthState extends State<StackLength> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(translation.returnButton)),
+                          child: Text(translation.returnButton, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
                       ElevatedButton(
                           onPressed: _buttonEnable == true
                               ? () async {
@@ -119,7 +122,7 @@ class _StackLengthState extends State<StackLength> {
                                   );
                                 }
                               : null,
-                          child: Text(translation.nextButton)),
+                          child: Text(translation.nextButton, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
                     ],
                   ),
                 ],

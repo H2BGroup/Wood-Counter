@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
         Locale('pl', ''),
       ],
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.green,
+        scaffoldBackgroundColor: backgroundColor,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             textStyle: TextStyle(foreground: Paint()..color = Colors.black),

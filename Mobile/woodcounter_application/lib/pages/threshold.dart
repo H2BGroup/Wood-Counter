@@ -31,16 +31,17 @@ class _SetThresholdState extends State<SetThreshold> {
     return Scaffold(
       appBar: AppBar(
         title: Text(translation.appTitle,
-            style: const TextStyle(fontWeight: FontWeight.bold)),
+            style: TextStyle(fontWeight: FontWeight.w900, foreground: Paint() ..color = Colors.white, letterSpacing: 1)),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 8, 130, 42),
         leading: Image.asset('assets/icons/stack.png'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(translation.selectThreshold),
+            Text(translation.selectThreshold,
+            style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
             FloodFillImage(
               key: _floodFillImageKey,
               imageProvider: FileImage(widget.image),
@@ -85,7 +86,7 @@ class _SetThresholdState extends State<SetThreshold> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(translation.returnButton)),
+                    child: Text(translation.returnButton, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
                 ElevatedButton(
                     onPressed: () {
                       setState(() {
@@ -98,7 +99,7 @@ class _SetThresholdState extends State<SetThreshold> {
                         }
                       });
                     },
-                    child: Text(translation.clearSelection)),
+                    child: Text(translation.clearSelection, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
                 ElevatedButton(
                     onPressed: stackArea != 0
                         ? () async {
@@ -122,7 +123,7 @@ class _SetThresholdState extends State<SetThreshold> {
                             );
                           }
                         : null,
-                    child: Text(translation.nextButton)),
+                    child: Text(translation.nextButton, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
               ],
             ),
           ],

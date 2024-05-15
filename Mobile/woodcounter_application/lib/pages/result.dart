@@ -16,10 +16,10 @@ class Result extends StatelessWidget {
     var translation = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(translation.appTitle, style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(translation.appTitle, 
+        style: TextStyle(fontWeight: FontWeight.w900, foreground: Paint() ..color = Colors.white, letterSpacing: 1)),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 8, 130, 42),
         leading: Image.asset('assets/icons/stack.png'),
       ),
       body: Center(
@@ -27,10 +27,10 @@ class Result extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.file(image),
-            Text(translation.stackVolume),
-            Text(stackVolume.toStringAsFixed(2)),
-            Text(translation.error),
-            Text("${error.toStringAsFixed(2)}%"),
+            Text(translation.stackVolume, style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
+            Text(stackVolume.toStringAsFixed(2), style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
+            Text(translation.error, style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
+            Text("${error.toStringAsFixed(2)}%", style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -40,7 +40,7 @@ class Result extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text(translation.returnToHomePage)),
+                child: Text(translation.returnToHomePage, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
           ],
         ),
       ),

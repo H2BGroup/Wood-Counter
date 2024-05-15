@@ -31,16 +31,17 @@ class _SelectPlateState extends State<SelectPlate> {
     return Scaffold(
       appBar: AppBar(
         title: Text(translation.appTitle,
-            style: const TextStyle(fontWeight: FontWeight.bold)),
+            style: TextStyle(fontWeight: FontWeight.w900, foreground: Paint() ..color = Colors.white, letterSpacing: 1)),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 8, 130, 42),
         leading: Image.asset('assets/icons/stack.png'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(translation.selectPlate),
+            Text(translation.selectPlate,
+            style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
             Stack(
               children: <Widget>[
                 GestureDetector(
@@ -145,7 +146,7 @@ class _SelectPlateState extends State<SelectPlate> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(translation.returnButton)),
+                    child: Text(translation.returnButton, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
                 ElevatedButton(
                     onPressed: plateArea != 0
                         ? () async {
@@ -165,7 +166,7 @@ class _SelectPlateState extends State<SelectPlate> {
                             );
                           }
                         : null,
-                    child: Text(translation.nextButton)),
+                    child: Text(translation.nextButton, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
               ],
             ),
           ],

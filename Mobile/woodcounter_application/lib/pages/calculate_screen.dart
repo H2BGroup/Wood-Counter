@@ -17,9 +17,9 @@ class _CalculateScreenState extends State<CalculateScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(translation.appTitle,
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        style: TextStyle(fontWeight: FontWeight.w900, foreground: Paint() ..color = Colors.white, letterSpacing: 1)),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 8, 130, 42),
         leading: Image.asset('assets/icons/stack.png'),
       ),
       body: Center(
@@ -30,7 +30,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
               color: Colors.white,
               size: 100,
             ),
-            Text(translation.calculating),
+            Text(translation.calculating, style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
           ],
         ),
       ),

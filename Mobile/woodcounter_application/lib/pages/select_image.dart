@@ -6,6 +6,8 @@ import 'package:woodcounter_application/pages/home.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:woodcounter_application/pages/select_plate.dart';
 
+var buttonStyle = TextStyle(foreground: Paint() ..color = backgroundColor, fontWeight: FontWeight.w900, fontSize: 18);
+
 class SelectImage extends StatefulWidget {
   const SelectImage({super.key});
 
@@ -36,9 +38,9 @@ class _SelectImageState extends State<SelectImage> {
     return Scaffold(
       appBar: AppBar(
         title:
-            Text(translation.appTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(translation.appTitle, style: TextStyle(fontWeight: FontWeight.w900, foreground: Paint() ..color = Colors.white, letterSpacing: 1)),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: backgroundColor,
         leading: Image.asset('assets/icons/stack.png'),
       ),
       body: Center(
@@ -49,8 +51,8 @@ class _SelectImageState extends State<SelectImage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: () => _pickImage(ImageSource.gallery), child: Text(translation.imageGalleryButton)),
-                ElevatedButton(onPressed: () => _pickImage(ImageSource.camera), child: Text(translation.takeAPhotoButton)),
+                    onPressed: () => _pickImage(ImageSource.gallery), child: Text(translation.imageGalleryButton, style: buttonStyle)),
+                ElevatedButton(onPressed: () => _pickImage(ImageSource.camera), child: Text(translation.takeAPhotoButton, style: buttonStyle)),
               ],
             ),
             if (_image != null) Image.file(_image!),
@@ -65,7 +67,7 @@ class _SelectImageState extends State<SelectImage> {
                             builder: (context) => const HomePage()),
                       );
                     },
-                    child: Text(translation.returnButton)),
+                    child: Text(translation.returnButton, style: buttonStyle)),
                 ElevatedButton(
                     onPressed: _image != null ? () {
                       Navigator.push(
@@ -75,7 +77,7 @@ class _SelectImageState extends State<SelectImage> {
                         ),
                       );
                     } : null,
-                    child: Text(translation.nextButton)),
+                    child: Text(translation.nextButton, style: buttonStyle)),
               ],
             ),
           ],
