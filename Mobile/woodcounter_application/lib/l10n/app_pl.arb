@@ -5,6 +5,7 @@
     "returnButton": "Powrót",
     "nextButton": "Dalej",
 
+	"pickPhoto": "Wybierz zdjęcie stosu",
     "imageGalleryButton": "Galeria zdjęć",
     "takeAPhotoButton": "Zrób zdjęcie",
 
@@ -14,7 +15,7 @@
     "enableMagnifier": "Włącz lupę",
 
     "selectThreshold": "Wybierz zakres pomiaru",
-    "clearSelection": "Wyczyść zaznaczenia",
+    "clearSelection": "Wyczyść",
 
     "giveLength": "Podaj długość stosu",
     

@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                 style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700, letterSpacing: 2)),
             const SizedBox(height: 100),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(padding: EdgeInsets.all(20),),
+              style: ElevatedButton.styleFrom(padding: EdgeInsets.all(20)),
               onPressed: () {
                 Navigator.push(
                   context,

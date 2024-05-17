@@ -47,6 +47,8 @@ class _SelectImageState extends State<SelectImage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(translation.pickPhoto,
+            style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
