@@ -54,7 +54,10 @@ class _StackLengthState extends State<StackLength> {
                 children: [
                   Text(translation.giveLength,
                   style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
-                  TextField(
+                  SizedBox(
+                    width: 270.0,
+                    child: 
+                    TextField(
                     style: TextStyle(fontWeight: FontWeight.w500, foreground: Paint() ..color = Colors.white, fontSize: 15),
                     keyboardType: TextInputType.number,
                     controller: myController,
@@ -71,11 +74,13 @@ class _StackLengthState extends State<StackLength> {
                       }
                     },
                     decoration: InputDecoration(
-                      border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 8, 67, 7), width: 4.0), borderRadius: BorderRadius.all(Radius.circular(15.0))),                   
                       hintText: translation.lengthInMeters,
-                      hintStyle: TextStyle(fontWeight: FontWeight.w500, foreground: Paint() ..color = Colors.white, fontSize: 15),
+                      hintStyle: TextStyle(fontWeight: FontWeight.w500, foreground: Paint() ..color = const Color.fromARGB(200, 255, 255, 255), fontSize: 15, fontStyle: FontStyle.italic),
                     ),
-                  ),
+                  )
+                  )
+                  ,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -83,7 +88,7 @@ class _StackLengthState extends State<StackLength> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(translation.returnButton, style: TextStyle(foreground: Paint() ..color = Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
+                          child: Text(translation.returnButton, style: TextStyle(foreground: Paint() ..color = const Color.fromARGB(255, 8, 130, 42), fontWeight: FontWeight.w900, fontSize: 18))),
                       ElevatedButton(
                           onPressed: _buttonEnable == true
                               ? () async {

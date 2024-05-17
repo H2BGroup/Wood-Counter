@@ -19,7 +19,7 @@
 
     "giveLength": "Enter the stack length",
     
-    "lengthInMeters": "[Length in meters]",
+    "lengthInMeters": "Enter the length in meters",
 
     "stackVolume": "Stack volume",
     "error": "Measurement error",

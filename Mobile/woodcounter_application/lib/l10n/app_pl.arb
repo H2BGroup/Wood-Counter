@@ -19,7 +19,7 @@
 
     "giveLength": "Podaj długość stosu",
     
-    "lengthInMeters": "[Długość w metrach]",
+    "lengthInMeters": "Podaj długość w metrach",
 
     "stackVolume": "Objętość stosu",
     "error": "Błąd pomiaru",
