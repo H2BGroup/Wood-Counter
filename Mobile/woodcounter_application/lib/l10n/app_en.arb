@@ -1,0 +1,30 @@
+{
+    "appTitle": "WoodCounter",
+    "subtitle": "You can count on us!",
+    "startButton": "Let's start!",
+    "returnButton": "Return",
+    "nextButton": "Next",
+
+	"pickPhoto": "Pick a photo",
+    "imageGalleryButton": "Image gallery",
+    "takeAPhotoButton": "Take a photo",
+
+    "drawBorder": "Draw a border around wood stack",
+
+    "selectPlate": "Select the plate",
+    "enableMagnifier": "Enable magnifier",
+
+    "selectThreshold": "Select the range of measurement",
+    "clearSelection": "Clear selection",
+
+    "giveLength": "Enter the stack length",
+    
+    "lengthInMeters": "Enter the length in meters",
+
+    "stackVolume": "Stack volume",
+    "error": "Measurement error",
+    "returnToHomePage": "Return to home page",
+
+    "calculating": "Calculating",
+    "calculate": "Calculate"
+}
