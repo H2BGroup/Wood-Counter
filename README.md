@@ -4,5 +4,5 @@
 ### Autorzy: Jan Barczewski, Radosław Gajewski, Maciej Sikora
 
 <div align="center">
-	![alt text](photo.png)
+	<img src="photo.png">
 </div>
