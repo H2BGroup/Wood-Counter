@@ -12,9 +12,9 @@ const plateWidthInMM = 27;
 const plateHeightInMM = 43;
 const plateAreaInMM = plateHeightInMM * plateWidthInMM;
 
-double calculateStackVolume(int stackArea, int plateArea, double stackLength) {
+double calculateStackVolume(int stackArea, int plateArea, double stackLength, double plateScale) {
   int fullStackArea = stackArea + plateArea;
-  double rate = plateAreaInMM / plateArea;
+  double rate = plateAreaInMM * plateScale / plateArea;
 
   return (fullStackArea * rate * stackLength * 1000) / 1000000000;
 }
