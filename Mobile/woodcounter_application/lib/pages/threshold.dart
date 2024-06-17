@@ -7,11 +7,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:woodcounter_application/calculations.dart';
 
 class SetThreshold extends StatefulWidget {
-  SetThreshold({super.key, required this.image, required this.platePosition, required this.plateScale});
+  SetThreshold({super.key, required this.image, required this.platePosition, required this.plateScale, required this.plateThreshold});
 
   final File image;
   final Offset platePosition;
   final double plateScale;
+  final double plateThreshold;
 
   @override
   State<SetThreshold> createState() => _SetThresholdState();
@@ -120,7 +121,8 @@ class _SetThresholdState extends State<SetThreshold> {
                                     image: widget.image,
                                     platePosition: widget.platePosition,
                                     points: scaledWoodPoints,
-                                    plateScale: widget.plateScale),
+                                    plateScale: widget.plateScale,
+                                    plateThreshold: widget.plateThreshold),
                               ),
                             );
                           }

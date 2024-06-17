@@ -240,7 +240,8 @@ class _SelectPlateState extends State<SelectPlate> {
                                 builder: (context) => SetThreshold(
                                     image: widget.image,
                                     platePosition: scaledPlatePosition,
-                                    plateScale: differentPlateScale ? double.parse(myController.text) : 1.0),
+                                    plateScale: differentPlateScale ? double.parse(myController.text) : 1.0,
+                                    plateThreshold: threshold),
                               ),
                             );
                           }
