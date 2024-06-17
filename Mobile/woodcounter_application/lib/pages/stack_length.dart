@@ -13,12 +13,14 @@ class StackLength extends StatefulWidget {
       required this.image,
       required this.platePosition,
       required this.points,
-      required this.plateScale});
+      required this.plateScale,
+      required this.plateThreshold});
 
   final File image;
   final Offset platePosition;
   final Map<Offset, double> points;
   final double plateScale;
+  final double plateThreshold;
 
   @override
   State<StackLength> createState() => _StackLengthState();
@@ -99,7 +101,7 @@ class _StackLengthState extends State<StackLength> {
                                   });
                                   List<bool> plateMask = (await floodFill(
                                       widget.image,
-                                      {widget.platePosition: 50}))!;
+                                      {widget.platePosition: widget.plateThreshold}))!;
                                   List<bool> woodMask = (await floodFill(
                                       widget.image, widget.points))!;
                                   int plateArea = plateMask
