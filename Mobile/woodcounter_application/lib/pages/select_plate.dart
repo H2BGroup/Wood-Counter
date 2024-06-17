@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:woodcounter_application/calculations.dart';
 
 const double magnifierRadius = 50;
+const double defaultThreshold = 50.0;
 
 class SelectPlate extends StatefulWidget {
   const SelectPlate({super.key, required this.image});
@@ -27,6 +28,8 @@ class _SelectPlateState extends State<SelectPlate> {
   bool differentPlateScale = false;
   final myController = TextEditingController();
   RegExp _numberRegex = RegExp(r'^\d*\.?\d*$');
+  bool differentThreshold = false;
+  double threshold = defaultThreshold;
   final GlobalKey<FloodFillImageState> _floodFillImageKey = GlobalKey();
 
   @override
@@ -53,7 +56,7 @@ class _SelectPlateState extends State<SelectPlate> {
           children: [
             Text(translation.selectPlate,
             style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
-                        Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Checkbox(value: differentPlateScale, onChanged: (newValue){
@@ -82,6 +85,41 @@ class _SelectPlateState extends State<SelectPlate> {
                   )
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:[
+                Checkbox(value: differentThreshold, onChanged: (newValue){
+                  setState(() {
+                    differentThreshold = newValue!;
+                    if(differentThreshold == false){
+                      threshold = defaultThreshold;
+                    }
+                  });
+                }),
+                Slider(
+                  value: threshold,
+                  max: 100,
+                  divisions: 100,
+                  label: threshold.round().toString(),
+                  activeColor: Colors.green[900],
+                  onChanged: differentThreshold ? (double value) {
+                    setState(
+                      () {
+                        threshold = value;
+                      },
+                    );
+                  } : null,
+                  onChangeEnd: (value) {
+                    final FloodFillImageState? floodFillImageState =
+                        _floodFillImageKey.currentState;
+                    if (floodFillImageState != null) {
+                      floodFillImageState.update();
+                    }
+                  },
+                ),
+              ]
+            ),
+            
             Stack(
               children: <Widget>[
                 GestureDetector(
@@ -114,7 +152,7 @@ class _SelectPlateState extends State<SelectPlate> {
                     imageProvider: FileImage(widget.image),
                     fillColor: Colors.amber.withOpacity(0.9),
                     avoidColor: [Colors.transparent],
-                    tolerance: 50,
+                    tolerance: threshold.toInt(),
                     onFloodFillEnd: (image, maskSize) => setState(() {
                       plateArea = maskSize;
                       print(plateArea);
