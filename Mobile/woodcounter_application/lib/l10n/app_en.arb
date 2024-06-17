@@ -13,6 +13,7 @@
 
     "selectPlate": "Select the plate",
     "enableMagnifier": "Enable magnifier",
+    "alternativePlateScale": "Alternative scale of plate",
 
     "selectThreshold": "Select the range of measurement",
     "clearSelection": "Clear selection",

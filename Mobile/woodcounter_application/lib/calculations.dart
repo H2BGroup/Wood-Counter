@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:woodcounter_application/morphological_operations.dart';
 import 'package:woodcounter_application/queuelinear_floodfiller.dart';
+import 'package:flutter/foundation.dart' as foundation;
 
 const plateWidthInMM = 27;
 const plateHeightInMM = 43;
 const plateAreaInMM = plateHeightInMM * plateWidthInMM;
 
-double calculateStackVolume(int stackArea, int plateArea, double stackLength) {
+double calculateStackVolume(int stackArea, int plateArea, double stackLength, double plateScale) {
   int fullStackArea = stackArea + plateArea;
-  double rate = plateAreaInMM / plateArea;
+  double rate = plateAreaInMM * plateScale / plateArea;
 
   return (fullStackArea * rate * stackLength * 1000) / 1000000000;
 }
@@ -67,6 +68,21 @@ Future<List<bool>?> floodFill(File image, Map<Offset, double> points) async {
   //closing
   finalMask = dilation(finalMask, decodedImage.height, decodedImage.width);
   finalMask = erosion(finalMask, decodedImage.height, decodedImage.width);
+
+  if(foundation.kDebugMode){
+    for(int h=0; h<decodedImage.height; h++){
+      for(int w=0; w<decodedImage.width; w++){
+        if(finalMask[h*decodedImage.width + w]){
+          decoded.setPixelRgba(w, h, 255, 0, 0);
+        }
+      }
+    }
+    var maskBytes = Uint8List.fromList(img.encodePng(decoded));
+    Random random = new Random();
+    File maskFile = await File("/storage/emulated/0/Download/"+"mask"+random.nextInt(1000).toString()+".png");
+    maskFile.writeAsBytes(maskBytes);
+    print(maskFile.path);
+  }
 
   return finalMask;
   //return (await filler.floodFill(pX, pY))!.where((object) => object == true).length;

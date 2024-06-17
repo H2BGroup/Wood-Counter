@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:woodcounter_application/floodfill_image.dart';
 import 'package:flutter/material.dart';
 import 'package:woodcounter_application/pages/threshold.dart';
@@ -23,7 +24,17 @@ class _SelectPlateState extends State<SelectPlate> {
   Offset? platePosition;
   Offset dragGesturePosition = Offset.zero;
   bool showMagnifier = false;
+  bool differentPlateScale = false;
+  final myController = TextEditingController();
+  RegExp _numberRegex = RegExp(r'^\d*\.?\d*$');
   final GlobalKey<FloodFillImageState> _floodFillImageKey = GlobalKey();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +53,35 @@ class _SelectPlateState extends State<SelectPlate> {
           children: [
             Text(translation.selectPlate,
             style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 22)),
+                        Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Checkbox(value: differentPlateScale, onChanged: (newValue){
+                  setState(() {
+                    differentPlateScale = newValue!;
+                    myController.text = "";
+                  });
+                }),
+                SizedBox(
+                    width: 240.0,
+                    child: 
+                    TextField(
+                    enabled: differentPlateScale,
+                    style: TextStyle(fontWeight: FontWeight.w500, foreground: Paint() ..color = Colors.white, fontSize: 12),                 
+                    keyboardType: TextInputType.number,
+                    controller: myController,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(_numberRegex)
+                    ],
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 8, 67, 7), width: 4.0), borderRadius: BorderRadius.all(Radius.circular(15.0))),                   
+                      hintText: translation.alternativePlateScale,
+                      hintStyle: TextStyle(fontWeight: FontWeight.w500, foreground: Paint() ..color = const Color.fromARGB(200, 255, 255, 255), fontSize: 15, fontStyle: FontStyle.italic),
+                    ),
+                  )
+                  )
+              ],
+            ),
             Stack(
               children: <Widget>[
                 GestureDetector(
@@ -161,7 +201,8 @@ class _SelectPlateState extends State<SelectPlate> {
                               MaterialPageRoute(
                                 builder: (context) => SetThreshold(
                                     image: widget.image,
-                                    platePosition: scaledPlatePosition),
+                                    platePosition: scaledPlatePosition,
+                                    plateScale: differentPlateScale ? double.parse(myController.text) : 1.0),
                               ),
                             );
                           }

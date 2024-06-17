@@ -134,7 +134,6 @@ class FloodFillPainter extends CustomPainter {
       _filler!.image!.height,
       ui.PixelFormat.rgba8888,
       (output) async {
-        image = output;
         mask = _filler?.getPixelsChecked();
         if(keepMasks){
           prevMasks[position] = mask!;

@@ -12,11 +12,13 @@ class StackLength extends StatefulWidget {
       {super.key,
       required this.image,
       required this.platePosition,
-      required this.points});
+      required this.points,
+      required this.plateScale});
 
   final File image;
   final Offset platePosition;
   final Map<Offset, double> points;
+  final double plateScale;
 
   @override
   State<StackLength> createState() => _StackLengthState();
@@ -109,7 +111,8 @@ class _StackLengthState extends State<StackLength> {
                                   double stackVolume = calculateStackVolume(
                                       woodArea,
                                       plateArea,
-                                      double.parse(myController.text));
+                                      double.parse(myController.text),
+                                      widget.plateScale);
                                   double error = calculateError(plateArea);
                                   setState(() {
                                     _isloading = false;
