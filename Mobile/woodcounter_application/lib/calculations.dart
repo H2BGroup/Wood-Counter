@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:woodcounter_application/morphological_operations.dart';
 import 'package:woodcounter_application/queuelinear_floodfiller.dart';
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:path/path.dart';
 
 const plateWidthInMM = 27;
 const plateHeightInMM = 43;
@@ -73,13 +74,15 @@ Future<List<bool>?> floodFill(File image, Map<Offset, double> points) async {
     for(int h=0; h<decodedImage.height; h++){
       for(int w=0; w<decodedImage.width; w++){
         if(finalMask[h*decodedImage.width + w]){
-          decoded.setPixelRgba(w, h, 255, 0, 0);
+          decoded.setPixelRgba(w, h, 0, 0, 0);
+        }
+        else{
+          decoded.setPixelRgba(w, h, 255, 255, 255);
         }
       }
     }
     var maskBytes = Uint8List.fromList(img.encodePng(decoded));
-    Random random = new Random();
-    File maskFile = await File("/storage/emulated/0/Download/"+"mask"+random.nextInt(1000).toString()+".png");
+    File maskFile = await File("/storage/emulated/0/Download/"+basenameWithoutExtension(image.path)+(points.length == 1 ? "PlateMask" : "WoodMask")+".png");
     maskFile.writeAsBytes(maskBytes);
     print(maskFile.path);
   }

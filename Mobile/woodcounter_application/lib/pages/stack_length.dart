@@ -119,8 +119,8 @@ class _StackLengthState extends State<StackLength> {
                                   setState(() {
                                     _isloading = false;
                                   });
-                                  print(plateArea);
-                                  print(woodArea);
+                                  print("Plate pixels: ${plateArea}");
+                                  print("Wood pixels: ${woodArea}");
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
