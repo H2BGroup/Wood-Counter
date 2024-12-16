@@ -36,14 +36,7 @@ class Result extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
             ), 
             Text(translation.error, style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
-            RichText(text: TextSpan(
-            children:[
-              TextSpan(text: "${(stackVolume-(stackVolume*error/100)).toStringAsFixed(2)} - ${(stackVolume+(stackVolume*error/100)).toStringAsFixed(2)} m"),
-              TextSpan(text: "3", style: TextStyle(fontFeatures: [FontFeature.superscripts()])),
-              TextSpan(text: " (${error.toStringAsFixed(2)}%)")
-            ],
-            style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16))
-            ),
+            Text("${error.toStringAsFixed(2)}%", style: TextStyle(fontWeight: FontWeight.bold, foreground: Paint() ..color = Colors.white, fontSize: 16)),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(

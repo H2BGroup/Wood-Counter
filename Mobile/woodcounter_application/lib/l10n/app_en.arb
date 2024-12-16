@@ -22,7 +22,7 @@
     
     "lengthInMeters": "Enter the length in meters",
 
-    "stackVolume": "Stack volume",
+    "stackVolume": "Volume of wood in stack",
     "error": "Measurement error",
     "returnToHomePage": "Return to home page",
 
